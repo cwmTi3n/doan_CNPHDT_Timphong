@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout-web :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" onLoad="active()">
+	<div class="site-wrap">
+		<div class="site-mobile-menu site-navbar-target">
+			<div class="site-mobile-menu-header">
+				<div class="site-mobile-menu-close mt-3">
+					<span class="icon-close2 js-menu-toggle"></span>
+				</div>
+			</div>
+			<div class="site-mobile-menu-body"></div>
+		</div>
+        <div id="sticky-wrapper" class="sticky-wrapper">
+            <header th:replace="/layout-web :: header"></header>
+        </div>
+        <!--Body-->
+        <div class="site-section site-section-phong" id="property-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div th:with="hinhanhs = ${phong.hinhanhs}" class="owl-carousel slide-one-item with-dots">
+                            <div>
+                                <img th:src="@{${phong.anhchinh}}"
+                                    alt="Image" class="img-fluid">
+                            </div>
+                            <div th:each="hinhanh : ${hinhanhs}">
+                                <img th:src="@{${hinhanh.url}}"
+                                    alt="Image" class="img-fluid">
+                            </div>
+                        </div>
+                        <div sec:authorize="isAuthenticated()" class="mt-1">
+                            <div class="row">
+                                <div th:if="${lichhen != null}" class="form-group col-10">
+                                    <h5 class="text-black mb-2">Ngày</h5>
+                                    <span class="form-label"></span> <input class="form-control"
+                                        type="date" required id="ngay" th:value="${lichhen.ngay}">
+                                </div>
+                                <div th:if="${lichhen != null}" class="form-group col-2">
+                                    <h5 class="text-black mb-2">Giờ</h5>
+                                    <span class="select-wrapper select--white"> <select style="padding-top:7px;padding-bottom:7px;"
+                                        id="gio">
+                                                <option th:if="${lichhen.gio != null}" th:value = "${lichhen.gio}" th:text="${lichhen.gio}" selected></option>
+                                                <option th:each="i : ${#numbers.sequence(1, 24)}" th:value="${i}" th:text="${i + ':00'}"></option>
+                                    </select>
+                                    </span>
+                                </div>
+                                <div th:if="${lichhen == null}" class="form-group col-10">
+                                    <h5 class="text-black mb-2">Ngày</h5>
+                                    <span class="form-label"></span> <input class="form-control"
+                                        type="date" required id="ngay">
+                                        <script>
+                                            document.getElementById('ngay').value = new Date().toISOString().slice(0, 10);
+                                        </script>
+                                </div>
+                                <div th:if="${lichhen == null}" class="form-group col-2">
+                                    <h5 class="text-black mb-2">Giờ</h5>
+                                    <span class="select-wrapper select--white"> <select style="padding-top:7px;padding-bottom:7px;"
+                                        id="gio">
+                                                <option th:each="i : ${#numbers.sequence(1, 24)}" th:value="${i}" th:text="${i + ':00'}"></option>
+                                    </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div th:if="${lichhen != null}">
+                                <p>Đã đặt lịch hẹn, click "Thay đổi lịch" để thay đổi thời gian</p>
+                            </div>
+                            <button th:if="${lichhen != null}" id="btn-booking" th:attr="onclick=|editLichhen(${lichhen.lichhenId})|" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Đặt lịch hẹn">
+                                <i class="bi bi-calendar2-check mr-1"></i>Thay đổi lịch
+                            </button>
+                            <button th:if="${lichhen == null}" id="btn-booking" onclick="booking()" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Đặt lịch hẹn">
+                                <i class="bi bi-calendar-plus mr-1"></i>Đặt lịch hẹn
+                            </button>
+                            <button th:if="${quantam == null}" id="btn-add-wishlist" onclick="quantam()" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Đặt lịch hẹn">
+                                <i class="bi bi-heart mr-1"></i>Quan tâm
+                            </button>
+                            <button th:if="${quantam != null}" id="btn-add-wishlist" onclick="quantam()" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Đặt lịch hẹn">
+                                <i class="bi bi-heart-fill mr-1"></i>Đang quan tâm
+                            </button>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">
+                            <p style="color: red;">Đăng nhập để đặt lịch xem phòng</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 pl-lg-5 ml-auto text-dark">
+                        <div class="mb-5">
+                            <p id="phongId" th:text="${phong.phongId}" hidden></p>
+                            <h2 class="text-black mb-4" th:text="${phong.ten }"></h2>
+                            <p th:text="'Giá: ' + ${phong.gia }"></p>
+                            <p th:text="'Loại phòng: ' + ${phong.loaiphong.name}"></p>
+                            <p th:text="'Diện tích: ' + ${phong.chieudai } + '*' + ${phong.chieurong }"></p>
+                            <p th:text="'Địa chỉ: ' + ${phong.diachi} + ', ' + ${phong.diachict}"></p>
+                            <p th:text="'Mô tả chi tiết: ' + ${phong.mota }"></p>
+                        </div>
+                        <div class="mb-5">
+                            <div class="mt-5">
+                                <img th:src="@{${phong.taikhoan.anhdd}}" alt="Image"
+                                    class="rounded-circle profile-img img-thumbnail" onerror="this.src = '/images/avatar.jpg'">
+                                <h4 class="mt-3 text-black" th:text="${phong.taikhoan.hoten}"></h4>
+                                <p class="text-muted mb-4">Chủ sở hữu</p>
+                                <div th:if="${phong.hienthi.toString() == 'MOINGUOI'}">
+                                    <p th:text="'Thông tin liên hệ: '+ ${phong.taikhoan.sdt}"></p>
+                                </div>
+                                <div th:if="${phong.hienthi.toString() == 'DADANGNHAP'}">
+                                    <p  sec:authorize="!isAuthenticated()" style="color: red;">Đăng nhập để xem thông tin liên hệ của chủ sở hữu</p>
+                                    <p sec:authorize="isAuthenticated()" th:text="'Thông tin liên hệ: '+ ${phong.taikhoan.sdt}"></p>
+                                </div>
+                                <p>Hi vọng các bạn tìm được chỗ ở mong muốn!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Reviews -->
+        <div sec:authorize="!isAuthenticated()" class="col-12" id="reviews">
+            <div class="card border-light mb-3">
+                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-comment"></i> Đăng nhập để đặt câu hỏi</div>
+            </div>
+        </div>
+        <div sec:authorize="isAuthenticated()" class="col-12" id="reviews">
+            <div class="card border-light mb-3">
+                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-comment"></i> Thảo luận</div>
+                <div>
+                    <span class="reply-trigger">Bình luận</span>
+                    <form class="reply-form hidden" th:action="@{/account/binhluan}" method="POST">
+                      <textarea name="noidung" class="comment-input" placeholder="Nhập bình luận của bạn"></textarea>
+                      <input type="password" name="phongId" th:value="${phong.phongId}" hidden>
+                      <button type="submit">Gửi</button>
+                    </form>
+                </div>
+                <div class="card-body" id="binhluans">
+                    <script th:src="@{/js/binhluan.js}"></script>
+                    <script>loadBinhluan();</script>
+                    <!-- <div th:each="binhluan : ${binhluans}">
+                        <div class="comment" style="background-color: #efeeee;">
+                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            <meta itemprop="datePublished" content="01-01-2016" th:text="${binhluan.thoigian} + ' by ' + ${binhluan.taikhoan.username}">
+                            <p style="margin-bottom: 0;" th:text="${binhluan.noidung}"></p>
+                        </div>
+                        <span class="reply-trigger">Trả lời</span>
+                        <form class="reply-form hidden" th:action="@{/detail-phong/account/traloi}" method="POST">
+                          <textarea name="noidung" class="comment-input" placeholder="Nhập bình luận của bạn"></textarea>
+                          <input type="password" th:value="${binhluan.binhluanId}" name="binhluanId" hidden>
+                          <input type="password" name="phongId" th:value="${phong.phongId}" hidden>
+                          <button type="submit">Gửi</button>
+                        </form>
+                        <div th:each="traloi : ${binhluan.tralois}" class="reply">
+                            <div class="comment" style="background-color: #efeeee;">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                <meta itemprop="datePublished" content="01-01-2016" th:text="${traloi.thoigian} + ' by ' + ${traloi.taikhoan.username}">
+                                <p style="margin-bottom: 0;" th:text="${traloi.noidung}"></p>
+                            </div>
+                            <span class="reply-trigger">Trả lời</span>
+                            <form class="reply-form hidden" th:action="@{/detail-phong/account/traloi}" method="POST">
+                              <textarea name="noidung" class="comment-input" placeholder="Nhập bình luận của bạn"></textarea>
+                              <input type="text" name="parent_traloiId" th:value="${traloi.traloiId}">
+                              <input type="text" name="phongId" th:value="${phong.phongId}">
+                              <button type="submit">Gửi</button>
+                            </form>
+                        </div>
+                    </div> -->
+                    
+                </div>
+            </div>
+        </div>
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-web :: footer"></footer>
+</body>
+</html>

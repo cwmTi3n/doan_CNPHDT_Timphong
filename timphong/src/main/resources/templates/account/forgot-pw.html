@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/layout-web :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" onLoad="active()">
+	<div class="site-wrap">
+		<div class="site-mobile-menu site-navbar-target">
+			<div class="site-mobile-menu-header">
+				<div class="site-mobile-menu-close mt-3">
+					<span class="icon-close2 js-menu-toggle"></span>
+				</div>
+			</div>
+			<div class="site-mobile-menu-body"></div>
+		</div>
+        <div id="sticky-wrapper" class="sticky-wrapper">
+            <header th:replace="/layout-web :: header"></header>
+        </div>
+        <!--Body-->
+        <div class="site-section site-section-phong" id="property-details">
+			<div class="container">
+				<div class="card text-center" style="width: 450px; margin:0 auto;">
+					<div class="card-header h5 text-white bg-primary">Quên mật khẩu</div>
+					<div class="card-body px-5">
+						<div id="send-code">
+							<p class="card-text py-2">
+								Nhập tên tài khoản để nhận mã code
+							</p>
+							<div class="form-outline">
+								<input id="username" placeholder="Tên tài khoản" type="text" class="form-control my-3" name="username" />
+							</div>
+							<button onclick="sendCode(this)" class="btn btn-primary w-100">Xác nhận</button>
+						</div>
+						<div class="hidden" id="change-pw">
+							<p>
+								Nhập mã code và mật khẩu mới trong thời gian: <p id="countdown" style="margin-top: -10px;"></p>
+							</p>
+							<div class="form-outline">
+								<input id="code" placeholder="Mã code" type="text" class="form-control my-3" name="code" />
+							</div>
+							<div class="form-outline">
+								<input id="password" placeholder="Mật khẩu mới" type="password" class="form-control my-3" name="password" />
+							</div>
+							<button onclick="changePw()" class="btn btn-primary w-100">Xác nhận</button>
+						</div>
+						<div class="d-flex justify-content-between mt-4">
+							<a class="" href="/login">Login/Register</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-web :: footer"></footer>
+</body>
+</html>

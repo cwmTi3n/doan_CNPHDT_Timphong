@@ -1,0 +1,8 @@
+---
+applications:
+  - name: timphong
+    memory: 1024M
+    instances: 1
+    path: target/timphong.jar
+    buildpacks:
+      - java_buildpack

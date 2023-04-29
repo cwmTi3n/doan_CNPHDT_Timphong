@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout-admin :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    <div class="site-wrap site-wrap--admin">
+        <div id="sticky-wrapper" class="sticky-wrapper sticky-wrapper--admin">
+            <header th:replace="/layout-admin :: header"></header>
+        </div>
+        <!--Body-->
+        <div class="container--admin" style="font-size: 14px;">
+            <div class="row">
+                <div class="col-12 col-xl-12">
+                    <h2 class="site-name py-4">Quản lý Users</h2>
+                    <a class="d-inline-flex mb-3 new-object-button"
+                        th:href="@{/admin/them-taikhoan}"> <i class="bi bi-plus-lg"></i>
+                        Thêm Tài Khoản
+                    </a>
+                </div>
+                <div class="col-12 col-xl-12 table-admin">
+                    <div class="table-admin-layer">
+                        <div class="mb-1">
+                            <form th:action="@{/admin/taikhoan}" method="get">
+                                <input type="text"
+                                    class="input-find input--border m-0 d-inline-block"
+                                    placeholder="Nhập tên tài khoản, email, số điện thoại" name="keyword" id="keyword" th:value="${keyword}">
+                                 <button class="btn button mt-2 px-3 py-1 btn-find" type="submit">Tìm</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-12 table-admin">
+                    <div th:with="sellers=${pSeller.getContent()}" class="table-admin-layer">
+                        <h3 th:text="${'Danh sách seller: ' + sellers.size() }"></h3>
+                        <table class="table table-hover">
+                            <thead class="thead-dark table-header-admin">
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col-2">Tài khoản</th>
+                                    <th scope="col-2">Họ và tên</th>
+                                    <th scope="col-2">SDT</th>
+                                    <th scope="col-2">Email</th>
+                                    <th scope="col-3">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-seller">
+                                    <tr th:each="seller, i : ${sellers}">
+                                        <td scope="row" th:text="${i.count}"></td>
+                                        <td class="col-1 text-center" th:text="${seller.username}"></td>
+                                        <td class="col-2 text-center" th:text="${seller.hoten}"></td>
+                                        <td class="col-2 text-center" th:text="${seller.sdt}"></td>
+                                        <td class="col-4 text-center" th:text="${seller.email}"></td>
+                                        <td>
+                                            <a class="btn btn-success mr-4" th:href="@{/admin/chinhsua-taikhoan(id=${seller.taikhoanId })}">
+                                                <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                            </a> 
+                                            <a class="btn btn-danger" th:href="@{/admin/xoa-taikhoan(id=${seller.taikhoanId })}">
+                                                <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-12">
+                            <nav aria-label="...">
+                                <ul th:with="pSTotal=${pSeller.getTotalPages()},  pSIndex=${pSeller.getNumber()}"  class="pagination">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                    <div th:if="${keyword == '' && pSTotal > 0}" style="display: flex; flex-direction: row;">
+                                        <li th:each="i : ${#numbers.sequence(1, pSTotal)}" class="page-item paging-seller" th:classappend="${pSIndex==i-1?'active':'' }"  th:id="'s' + ${i}">
+                                            <button th:text="${i}" class="page-link btn-page" th:attr="onclick=|pagingSeller(${i})|"></button>
+                                        </li>
+                                    </div>
+                                    
+                                    <div th:if="${keyword != '' && pSTotal > 0}" style="display: flex; flex-direction: row;">
+                                        <li th:each="i : ${#numbers.sequence(1, pSTotal)}" class="page-item paging-seller" th:classappend="${pSIndex==i-1?'active':'' }" th:id="'s' + ${i}">
+                                            <button th:text="${i}" class="page-link btn-page" th:attr="onclick=|pagingSearchSeller(${i}, '${keyword}')|"></button>
+                                        </li>
+                                    </div>
+
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    </div>
+                <div class="col-12 col-xl-12 table-admin">
+                    <div th:with="users=${pUser.getContent()}" class="table-admin-layer">
+                        <h3 th:text="'Danh sách User: ' + ${users.size() }"></h3>
+                        <table class="table table-hover">
+                            <thead class="thead-dark table-header-admin">
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col-2">Tài khoản</th>
+                                    <th scope="col-2">Họ và tên</th>
+                                    <th scope="col-2">SDT</th>
+                                    <th scope="col-2">Email</th>
+                                    <th scope="col-3">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody id = "table-user">
+                                    <tr th:each="user, i : ${users}">
+                                        <td scope="row" th:text="${i.count}"></td>
+                                        <td class="col-1 text-center" th:text="${user.username}"></td>
+                                        <td class="col-2 text-center" th:text="${user.hoten}"></td>
+                                        <td class="col-2 text-center" th:text="${user.sdt}"></td>
+                                        <td class="col-4 text-center" th:text="${user.email}"></td>
+                                        <td>
+                                            <a class="btn btn-success mr-4" th:href="@{/admin/chinhsua-taikhoan(id=${user.taikhoanId })}">
+                                                <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                            </a> 
+                                            <a class="btn btn-danger" th:href="@{/admin/xoa-taikhoan(id=${user.taikhoanId })}">
+                                                <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                       <div class="col-12">
+                            <nav aria-label="...">
+                                <ul th:with="pUTotal=${pUser.getTotalPages() }, pUIndex=${pUser.getNumber()}" class="pagination">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                    <div th:if="${keyword == '' && pUTotal > 0}" style="display: flex; flex-direction: row;">
+                                        <li th:each="i : ${#numbers.sequence(1, pUTotal)}" class="page-item paging-user" th:classappend="${pUIndex==i-1?'active':'' }" th:id="'u' + ${i}">
+                                            <button class="page-link btn-page" th:attr="onclick=|pagingUser(${i})|"  th:text="${i}"></button>
+                                        </li>
+                                    </div>
+                                    <div th:if="${keyword != '' && pUTotal > 0}" style="display: flex; flex-direction: row;">
+                                        <li th:each="i : ${#numbers.sequence(1, pUTotal)}" class="page-item paging-user" th:classappend="${pUIndex==i-1?'active':'' }" th:id="'u' + ${i}">
+                                            <button class="page-link btn-page" th:attr="onclick=|pagingSearchUser(${i}, '${keyword}')|" th:text="${i}"></button>
+                                        </li>
+                                    </div>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-admin :: footer"></footer>
+</body>
+</html>

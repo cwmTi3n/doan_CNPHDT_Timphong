@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout-web :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" onLoad="active()">
+	<div class="site-wrap">
+		<div class="site-mobile-menu site-navbar-target">
+			<div class="site-mobile-menu-header">
+				<div class="site-mobile-menu-close mt-3">
+					<span class="icon-close2 js-menu-toggle"></span>
+				</div>
+			</div>
+			<div class="site-mobile-menu-body"></div>
+		</div>
+        <div id="sticky-wrapper" class="sticky-wrapper">
+            <header th:replace="/layout-web :: header"></header>
+        </div>
+        <!--Body-->
+        <div class="site-section site-section-phong" id="property-details">
+            <div class="mx-5">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="site-name py-4">Chỉnh sửa phòng</h2>
+                        <form class="text-dark" th:action="@{/seller/chinhsua-phong}" method="post" enctype="multipart/form-data">
+                            <input type="text" name="phongId" th:value="${phong.phongId }" hidden>
+                                            <div class="row flex-wrap">
+                                                <div class="col-5">
+                                                    <div class="row">
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-admin__small pr-3 col-4">Tên:
+                                                            </label><input class="col-8 py-2 border-radius-12" type="text"
+                                                                name="ten" th:value="${phong.ten }">
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-admin__small pr-3 col-4">Chiều
+                                                                dài: </label><input class="col-8 py-2 border-radius-12"
+                                                                type="text" name="chieudai" th:value="${phong.chieudai }">
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-admin__small pr-3 col-4">Chiều
+                                                                rộng: </label><input class="col-8 py-2 border-radius-12"
+                                                                type="text" name="chieurong" th:value="${phong.chieurong }">
+                                                        </div>
+        
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-admin__small pr-3 col-4">Giá:
+                                                            </label><input class="col-8 py-2 border-radius-12" type="text"
+                                                                name="gia" th:value="${phong.gia }">
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-admin__small pr-3 col-4">Mô
+                                                                tả: </label>
+                                                            <textarea rows="4" cols="50" class="py-2 border-radius-12"
+                                                                name="mota" th:text="${phong.mota }"></textarea>
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-web pr-3 col-3">Loại
+                                                                phòng: </label><span class="select-wrapper select--dark"> <select
+                                                                name="loaiphongId">
+                                                                    <option th:value="${phong.loaiphong.loaiphongId }" th:text="${phong.loaiphong.name }"></option>
+                                                                    <option th:if="${phong == null }" value="0" selected>Chọn loại phòng</option>
+                                                                    <option th:each="lp : ${loaiphongs}" th:value="${lp.loaiphongId }" th:text="${lp.name }"></option>
+                                                            </select></span>
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-admin__small pr-3 col-6">Ai được xem thông tin liên hệ: </label> 
+                                                            <span class="select-wrapper select--dark">
+                                                                <select name="hienthi">
+                                                                    <div th:if="${phong.hienthi.toString() == 'MOINGUOI' }">
+                                                                        <option selected value="MOINGUOI">Mọi người</option>
+                                                                        <option value="DADANGNHAP">Đã đăng nhập</option>
+                                                                    </div>
+                                                                    <div th:if="${phong.hienthi.toString() == 'DADANGNHAP' }">
+                                                                        <option selected value="DADANGNHAP">Đã đăng nhập</option>
+                                                                        <option value="MOINGUOI">Mọi người</option>
+                                                                    </div>
+                                                                </select>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-admin__small pr-3 col-3">Hình
+                                                                ảnh chính: </label> <img height="100" width="160" id="img-anhchinh"
+                                                                class="img-thumbnail" th:src="@{${phong.anhchinh }}" onerror="this.src = '/images/placeholder.jpg'"> <label
+                                                                class="ml-3 label-img" for="input-anhchinh"><i
+                                                                class="bi bi-upload"></i> Upload</label> <input id="input-anhchinh"
+                                                                type="file" hidden onchange="previewImage(this, 'img-anhchinh');"
+                                                                name="anhchinh">
+                                                        </div>
+                                                        <div th:if="${hinhanhs.size() == 2}" class="col-12" style="padding-left: 3px;">
+                                                            <div class="col-12 mb-3">
+                                                                <label class="label-info-admin__small pr-3 col-3">Hình
+                                                                    ảnh phụ: </label>
+                                                                    <img height="100" width="160" id="img-anhphu1" class="img-thumbnail" th:src="@{${hinhanhs.get(0).url}}" onerror="this.src = '/images/placeholder.jpg'"> 
+                                                                    <label
+                                                                    class="ml-3 label-img" for="input-anhphu1"><i
+                                                                    class="bi bi-upload"></i> Upload</label> <input id="input-anhphu1"
+                                                                    type="file" hidden onchange="previewImage(this, 'img-anhphu1');"
+                                                                    name="anhphu1">
+                                                                    <input hidden type="text" name="url1" th:value="${hinhanhs.get(0).url}">
+                                                                    <a th:href="@{/seller/delete-anhphu/{id}(id=${hinhanhs.get(0).hinhanhId})}">Xóa</a>
+                                                            </div>
+                                                            <div class="col-12 mb-3">
+                                                                <label class="label-info-admin__small pr-3 col-3">Hình
+                                                                    ảnh phụ: </label>
+                                                                    <img height="100" width="160" id="img-anhphu2"
+                                                                    class="img-thumbnail" th:src="@{${hinhanhs.get(1).url}}" onerror="this.src = '/images/placeholder.jpg'"> <label
+                                                                    class="ml-3 label-img" for="input-anhphu2"><i
+                                                                    class="bi bi-upload"></i> Upload</label> <input id="input-anhphu2"
+                                                                    type="file" hidden onchange="previewImage(this, 'img-anhphu2');"
+                                                                    name="anhphu2">
+                                                                    <input hidden type="text" name="url2" th:value="${hinhanhs.get(1).url}">
+                                                                    <a th:href="@{/seller/delete-anhphu/{id}(id=${hinhanhs.get(1).hinhanhId})}">Xóa</a>
+                                                            </div>
+                                                        </div>
+                                                        <div th:if="${hinhanhs.size() == 1}" class="col-12" style="padding-left: 3px;">
+                                                            <div class="col-12 mb-3">
+                                                                <label class="label-info-admin__small pr-3 col-3">Hình
+                                                                    ảnh phụ: </label>
+                                                                    <img height="100" width="160" id="img-anhphu1" class="img-thumbnail" th:src="@{${hinhanhs.get(0).url}}" onerror="this.src = '/images/placeholder.jpg'"> 
+                                                                    <label
+                                                                    class="ml-3 label-img" for="input-anhphu1"><i
+                                                                    class="bi bi-upload"></i> Upload</label> <input id="input-anhphu1"
+                                                                    type="file" hidden onchange="previewImage(this, 'img-anhphu1');"
+                                                                    name="anhphu1">
+                                                                    <input hidden type="text" name="url1" th:value="${hinhanhs.get(0).url}">
+                                                                    <a th:href="@{/seller/delete-anhphu/{id}(id=${hinhanhs.get(0).hinhanhId})}">Xóa</a>
+                                                            </div>
+                                                            <div class="col-12 mb-3">
+                                                                <label class="label-info-admin__small pr-3 col-3">Hình
+                                                                    ảnh phụ: </label>
+                                                                    <img height="100" width="160" id="img-anhphu2"
+                                                                    class="img-thumbnail" src="/images/placeholder.jpg"> <label
+                                                                    class="ml-3 label-img" for="input-anhphu2"><i
+                                                                    class="bi bi-upload"></i> Upload</label> <input id="input-anhphu2"
+                                                                    type="file" hidden onchange="previewImage(this, 'img-anhphu2');"
+                                                                    name="anhphu2">
+                                                            </div>
+                                                        </div>
+                                                        <div th:if="${hinhanhs.size() == 0}" class="col-12" style="padding-left: 3px;">
+                                                            <div class="col-12 mb-3">
+                                                                <label class="label-info-admin__small pr-3 col-3">Hình
+                                                                    ảnh phụ: </label>
+                                                                    <img height="100" width="160" id="img-anhphu1" class="img-thumbnail" src="/images/placeholder.jpg"> 
+                                                                    <label
+                                                                    class="ml-3 label-img" for="input-anhphu1"><i
+                                                                    class="bi bi-upload"></i> Upload</label> <input id="input-anhphu1"
+                                                                    type="file" hidden onchange="previewImage(this, 'img-anhphu1');"
+                                                                    name="anhphu1">
+                                                            </div>
+                                                            <div class="col-12 mb-3">
+                                                                <label class="label-info-admin__small pr-3 col-3">Hình
+                                                                    ảnh phụ: </label>
+                                                                    <img height="100" width="160" id="img-anhphu2"
+                                                                    class="img-thumbnail" src="/images/placeholder.jpg"> <label
+                                                                    class="ml-3 label-img" for="input-anhphu2"><i
+                                                                    class="bi bi-upload"></i> Upload</label> <input id="input-anhphu2"
+                                                                    type="file" hidden onchange="previewImage(this, 'img-anhphu2');"
+                                                                    name="anhphu2">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-admin__small pr-3 col-4">Địa
+                                                                chỉ: </label><input class="col-8 py-2 border-radius-12"
+                                                                type="text" name="diachi" th:value="${phong.diachi }" id="diachi" readonly>
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                                <div class="form-group">
+                                                                    <div class="select-wrap">
+                                                                        <span class="icon icon-keyboard_arrow_down"></span> 
+                                                                        <select class="form-select form-select-sm mb-3 form-control px-3" id="tinh" aria-label=".form-select-sm">
+                                                                            <option value="" selected>Chọn tỉnh thành</option>           
+                                                                            </select>
+                                                                    </div>
+                                                                </div>
+                                            
+                                                                <div class="form-group">
+                                                                    <div class="select-wrap">
+                                                                        <span class="icon icon-keyboard_arrow_down"></span>
+                                                                        <select class="form-select form-select-sm mb-3 form-control px-3" id="huyen" aria-label=".form-select-sm">
+                                                                            <option value="" selected>Chọn quận huyện</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                            
+                                                                <div class="form-group">
+                                                                    <div class="select-wrap">
+                                                                        <span class="icon icon-keyboard_arrow_down"></span> 
+                                                                        <select class="form-select form-select-sm form-control px-3" id="xa" aria-label=".form-select-sm">
+                                                                            <option value="" selected>Chọn phường xã</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                            
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label class="label-info-admin__small pr-3 col-4">Địa
+                                                                chỉ chi tiết: </label><input class="col-8 py-2 border-radius-12"
+                                                                type="text" name="diachict" th:value="${phong.diachict }">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-10 text-right my-4">
+                                                    <button class="btn btn-info" type="submit">Lưu</button>
+                                                    <a th:href="@{/seller/phong}"
+                                                        class="ml-3 d-inline-block text-white btn bg-danger">Quay
+                                                        lại</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-web :: footer"></footer>
+</body>
+</html>

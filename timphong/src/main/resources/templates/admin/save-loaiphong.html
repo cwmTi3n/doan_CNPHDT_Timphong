@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout-admin :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    <div class="site-wrap site-wrap--admin">
+        <div id="sticky-wrapper" class="sticky-wrapper sticky-wrapper--admin">
+            <header th:replace="/layout-admin :: header"></header>
+        </div>
+        <!--Body-->
+        <div class="container--admin container--admin--full">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="site-name py-4">Thêm loại phòng</h2>
+                    <form class="d-flex align-items-center" th:action="@{/admin/save-loaiphong}"
+                        method="post">
+                        <label class="col label--admin--big" for="tenloai">Tên loại phòng: </label>
+                        <div th:if="${lp != null}" class="col-5">
+                            <input class="col-12 py-2 border-radius-12" type="text"
+                                name="name" th:value="${lp.name }">
+                            <input class="col-12 py-2 border-radius-12" type="text"
+                                    name="loaiphongId" th:value="${lp.loaiphongId }" hidden>
+                        </div>
+                        <div th:if="${lp == null}" class="col-5">
+                            <input class="col-12 py-2 border-radius-12" type="text"
+                                name="name" placeholder="Nhập tên loại phòng">
+                        </div>
+                        <div class="col-2">
+                            <button class="col btn btn-info" type="submit">Thêm</button>
+                        </div>
+                        <div class="col-2">
+                            <a th:href="@{/admin/loaiphong}"
+                                class="col text-white btn bg-danger">Hủy</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-admin :: footer"></footer>
+</body>
+</html>

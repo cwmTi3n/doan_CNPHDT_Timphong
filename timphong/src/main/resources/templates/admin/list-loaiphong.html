@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout-admin :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    <div class="site-wrap site-wrap--admin">
+        <div id="sticky-wrapper" class="sticky-wrapper sticky-wrapper--admin">
+            <header th:replace="/layout-admin :: header"></header>
+        </div>
+        <!--Body-->
+        <div id="list-phong" class="container--admin container--admin--full">
+            <div class="row">
+                <div class="col-12 col-xl-12">
+                    <h2 class="site-name py-4">Quản lý Loại phòng</h2>
+                    <a class="d-inline-flex mb-3 new-object-button" th:href="@{/admin/them-loaiphong}"> 
+                        <i class="bi bi-plus-lg"></i> Thêm loại phòng
+                    </a>
+                </div>
+        
+                <div class="col-12 col-xl-12 table-admin">
+                    <div class="table-admin-layer">
+                    <table class="table table-hover">
+                        <thead class="thead-light table-header-admin rounded">
+                            <tr class="">
+                                <th class="" scope="col">STT</th>
+                                <th class="" scope="col">Tên loại phòng</th>
+                                <th class="" scope="col">Số phòng</th>
+                                <th class="" scope="col">Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="lp, i : ${loaiphongs}" class="text-center">
+                                <td scope="row" th:text="${i.count}"></td>
+                                <td class="main-name-object" th:text="${lp.name}"></td>
+                                <td th:text="${lp.phongs.size() }"></td>
+                                <td>
+                                    <a class="btn btn-success mr-4" th:href="@{/admin/chinhsua-loaiphong(id=${lp.loaiphongId})}">
+                                        <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </a> 
+                                    <a class="btn btn-danger" th:href="@{/admin/xoa-loaiphong(id=${lp.loaiphongId})}">
+                                        <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+            </div>
+            <!--/Body-->
+    </div>
+    <footer th:replace="/layout-admin :: footer"></footer>
+</body>
+</html>

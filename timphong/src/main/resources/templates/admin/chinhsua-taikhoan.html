@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout-admin :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    <div class="site-wrap site-wrap--admin">
+        <div id="sticky-wrapper" class="sticky-wrapper sticky-wrapper--admin">
+            <header th:replace="/layout-admin :: header"></header>
+        </div>
+        <!--Body-->
+        <div class="container--admin container--admin--full">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="site-name py-4">Thông tin cá nhân</h2>
+                    <form class="d-flex align-items-center" th:action="@{/admin/chinhsua-taikhoan}"
+                        method="post" enctype="multipart/form-data">
+                        <input type="text" hidden name="taikhoanId" th:value="${user.taikhoanId }">
+                        <div class="row flex-wrap">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <label class="label-info-admin pr-3" for="">Ảnh: </label><img
+                                            id="previewImg"
+                                            class="rounded-circle profile-img img-thumbnail" th:src="@{${user.anhdd}}">
+                                        <label class="ml-3 label-img" for="anhdaidien"><i
+                                            class="bi bi-upload"></i> Upload</label> <input hidden type="file"
+                                            name="anhdd" id="anhdaidien" onchange="previewFile(this);"
+                                            class="inputfile"> 
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="label-info-admin pr-3" for="tentk">Tài
+                                            khoản: </label><input readonly class="col-12 py-2 border-radius-12"
+                                            type="text" name="username" th:value="${user.username }">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="label-info-admin pr-3">Mật khẩu: </label><input
+                                            class="col-12 py-2 border-radius-12" type="password"
+                                            name="password" th:value="${user.password }">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="label-info-admin pr-3">Quyền: </label> <span
+                                            class="select-wrapper select--white"><select
+                                            name="role">
+                                                <div th:if="${user.role.toString() == 'USER' }">
+                                                    <option selected value="USER">User</option>
+                                                    <option value="SELLER">Seller</option>
+                                                </div>
+                                                <div th:if="${user.role.toString() == 'SELLER' }">
+                                                    <option selected value="SELLER">Seller</option>
+                                                    <option value="USER">User</option>
+                                                </div>
+                                        </select> </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <label class="label-info-admin pr-3">Họ và tên: </label><input
+                                            class="col-12 py-2 border-radius-12" type="text" name="hoten"
+                                            th:value="${user.hoten }">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="label-info-admin pr-3">SDT: </label><input
+                                            class="col-12 py-2 border-radius-12" type="text" name="sdt"
+                                            th:value="${user.sdt }">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="label-info-admin pr-3">Email: </label><input
+                                            class="col-12 py-2 border-radius-12" type="text" name="email"
+                                            th:value="${user.email }">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="label-info-admin pr-3">Trang thái: </label> <span
+                                            class="select-wrapper select--white"><select
+                                            name="trangthai">
+                                                <div th:if="${user.trangthai == true }">
+                                                    <option selected value="true">Hiện</option>
+                                                    <option value="false">Ẩn</option>
+                                                </div>
+                                                <div th:if="${user.trangthai == false }">
+                                                    <option selected value="false">Ẩn</option>
+                                                    <option value="true">Hiện</option>
+                                                </div>
+                                        </select> </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-info" type="submit">Chỉnh sửa</button>
+                                <a th:href="@{/admin/taikhoan}"
+                                    class="ml-3 d-inline-block text-white btn bg-danger">Quay lại</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-admin :: footer"></footer>
+</body>
+</html>

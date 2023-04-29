@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout-admin :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    <div class="site-wrap site-wrap--admin">
+        <div id="sticky-wrapper" class="sticky-wrapper sticky-wrapper--admin">
+            <header th:replace="/layout-admin :: header"></header>
+        </div>
+        <!--Body-->
+        <div class="container--admin container--admin--full">
+            <div class="mx-1">
+                <div class="row">
+                    <div class="col-9">
+                        <div class="row">
+                            <div class="col-12 col-xl-12">
+                                <h2 class="site-name py-4">Quản lý phòng</h2>
+                            </div>
+                            <div class="col-12 table-admin">
+                                <div class="table-admin-layer">
+                                    <h3 class="font-weight-bold py-2">Danh sách phòng</h3>
+                                    <div>
+                                        <div class="mb-2">
+                                            <form th:action="@{/admin/phong}" method="get">
+                                                <input type="text"
+                                                    class="input-find input--border m-0 d-inline-block"
+                                                    placeholder="Nhập thông tin phòng" name="keyword" id="keyword" th:value="${keyword}">
+                                                <label for="inlineRadio1">Chọn trạng thái: </label>
+                                                    <div class="form-check form-check-inline">
+                                                    <input th:checked="${trangthai == true}" class="form-check-input" type="radio" name="trangthai" id="trangthai-true" th:value="true">
+                                                    <label class="form-check-label" for="inlineRadio1">Hoạt động</label>
+                                                    </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input th:checked="${trangthai == false}" class="form-check-input" type="radio" name="trangthai" id="trangthaifalse" th:value="false">
+                                                    <label class="form-check-label" for="inlineRadio2">Bị ẩn</label>
+                                                </div>
+                                                <br>
+                                                 <button class="btn button px-3 py-1 btn-find" type="submit">Tìm</button>
+                                            </form>
+                                        </div>
+                                        <div class="mb-1">
+                                             <select
+                                                onchange="callFromLoc('admin')" name="orderby" id="orderby"
+                                                class="form-control px-3">
+                                                <option value="ten">Mặc định</option>
+                                                <option value="descngaydang">Mới nhất</option>
+                                                <option value="ngaydang">Cũ nhất</option>
+                                                <option value="gia">Giá từ thấp đến cao</option>
+                                                <option value="descgia">Giá từ cao đến thấp</option>
+                                            </select>
+                                        </div>
+                                        <table class="table table-hover" style="font-size: 13px;">
+                                            <thead class="thead-dark">
+                                                <tr style="vertical-align: middle;">
+                                                    <th scope="col">STT</th>
+                                                    <th class="col-2" scope="col">Hình ảnh</th>
+                                                    <th class="col-2" scope="col">Tên phòng</th>
+                                                    <th class="col-1" scope="col">Giá</th>
+                                                    <th class="col-3" scope="col">Địa chỉ</th>
+                                                    <th class="col-2" scope="col">Chủ phòng</th>
+                                                    <th class="" scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody th:with="phongs=${pPhong.getContent()}" id="table-phong">
+                                                    <tr th:each="phong, i : ${phongs}" class="phong">
+                                                        <td class="col-1" th:text="${i.count}"></td>
+                                                        <td class="col-4">
+                                                            <img style = "height:120px; width:160px" class="img-thumbnail" th:src="@{${phong.anhchinh}}" /></td>
+                                                        <td class="col-2" th:text="${phong.ten}"></td>
+                                                        <td class="col-1" th:text="${phong.gia}"></td>
+                                                        <td class="col-2" th:text="${phong.diachi}"></td>
+                                                        <td class="col-2 p-5">
+                                                            <a class="main-name-object" href="" th:text="${phong.taikhoan.username}"></a></td>
+                                                        <td class="col-1">
+                                                            <a th:if="${phong.trangthai == true}" th:href="@{/admin/report-phong/{id}(id=${phong.phongId})}">
+                                                                <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Report">
+                                                                    <i class="bi bi-exclamation-triangle"></i>
+                                                                </button>
+                                                            </a>
+                                                            <a th:if="${phong.trangthai == false}" th:href="@{/admin/check-phong/{id}(id=${phong.phongId})}">
+                                                                <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Check">
+                                                                    <i class="bi bi-check-circle"></i>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                        <div th:with="pPIndex=${pPhong.getNumber() + 2}" class="col-12">
+                                            <input type="text" name="page" th:value="${pPIndex}" id="page" hidden>
+                                            <button onClick="callFromXemtiep('admin')" class="btn btn-primary">Xem tiếp</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="col-3" style="margin-top: 7rem;">
+                        <div class="mb-5">
+                            <h3 class="text-black h5  font-family-2">Lọc phòng theo</h3>
+                            <div class="form-group">
+                                <div class="select-wrap">
+                                    <span class="icon icon-keyboard_arrow_down"></span> 
+                                    <select id="loaiphong" class="form-control px-3">
+                                        <option value="0" selected>Loại phòng</option>
+                                        <option th:each="lp : ${loaiphongs}" th:value="${lp.loaiphongId }" th:text="${lp.name }"></option>
+                                    </select>
+                                </div>
+                            </div>
+        
+                            <div class="form-group">
+                                <div class="select-wrap">
+                                    <span class="icon icon-keyboard_arrow_down"></span> 
+                                    <select class="form-select form-select-sm mb-3 form-control px-3" id="city" aria-label=".form-select-sm">
+                                        <option value="" selected>Chọn tỉnh thành</option>           
+                                        </select>
+                                </div>
+                            </div>
+        
+                            <div class="form-group">
+                                <div class="select-wrap">
+                                    <span class="icon icon-keyboard_arrow_down"></span>
+                                    <select class="form-select form-select-sm mb-3 form-control px-3" id="district" aria-label=".form-select-sm">
+                                        <option value="" selected>Chọn quận huyện</option>
+                                    </select>
+                                </div>
+                            </div>
+        
+                            <div class="form-group">
+                                <div class="select-wrap">
+                                    <span class="icon icon-keyboard_arrow_down"></span> 
+                                    <select class="form-select form-select-sm form-control px-3" id="ward" aria-label=".form-select-sm">
+                                        <option value="" selected>Chọn phường xã</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn button px-3 py-1 btn-find mb-2"
+                            onClick="callFromLoc('admin')">Lọc</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-admin :: footer"></footer>
+</body>
+</html>

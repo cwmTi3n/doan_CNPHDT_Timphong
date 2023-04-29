@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:fragment="head">
+        <title>Tìm phòng</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="" />
+        <link rel="shortcut icon" th:href="@{/images/Logo.png}">
+        <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+        <link type="text/css" th:href="@{/css/font-family.css}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" th:href="@{/fonts/icomoon/style.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/base_login.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/gird_login.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/main_login.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-web.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/owl.carousel.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/owl.theme.default.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/owl.theme.default.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/jquery.fancybox.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-datepicker.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/fonts/flaticon/font/flaticon.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/aos.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+        <style>
+            ul > li > a > img.active{
+                background-color: #37cfa2 !important;
+            }
+        </style>
+    </head>
+<body>
+    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner"  th:fragment="header">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-6 col-xl-2">
+                    <h1 class="mb-0 site-logo p-0">
+                        <a th:href="@{/trangchu}" class="mb-0">Tìm phòng</a>
+                    </h1>
+                </div>
+                <div class="col-12 col-md-10 d-none d-xl-block">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                            <li sec:authorize="hasAuthority('ADMIN')" class='nav-item'><a th:href="@{/admin/loaiphong}" class="nav-link" onclick="parent.location='/admin/loaiphong'; return false;">Admin</a></li>
+                            <li class='nav-item' id="trangchu">
+                                <a th:href="@{/trangchu}" class="nav-link" th:classappend="${active=='trangchu'?'active':''}" onclick="parent.location='/trangchu'; return false;">Trang chủ</a>
+                            </li>
+                            <li class='nav-item' id="timkiem"><a th:href="@{/timkiem}" class="nav-link" th:classappend="${active=='timkiem'?'active':''}" onclick="parent.location='/timkiem'; return false;">Tìm kiếm</a></li>
+                            <li class='nav-item'><a href="#footer" class="">Liên hệ</a></li>
+                            <li sec:authorize="!isAuthenticated()" class='nav-item' id="dangnhap"><a th:href="@{/login}" class="" th:classappend="${active == 'dangnhap' ? 'active':'' }" onclick="parent.location='/login'; return false;">Đăng nhập</a></li>
+                            <li sec:authorize="isAuthenticated()" class='nav-item'>
+                                <a href="/profile"class='nav-link' onclick="parent.location='/profile'; return false;">
+                                    <img id="avatar" class="rounded-circle profile-img__small img-thumbnail" th:classappend="${active == 'trangcanhan'?'active':''}"
+                                    th:src="@{${#authentication.principal.getTaikhoanentity.anhdd}}" onerror="this.src = '/images/avatar.jpg'">
+                                </a>
+                            </li>
+                            <li sec:authorize="isAuthenticated()" class='nav-item'><a th:href="@{/logout}" onclick="parent.location='/logout'; return false;">Đăng xuất</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3">
+                    <a href="#"
+                        class="site-menu-toggle js-menu-toggle text-white float-right"><span
+                        class="icon-menu h3"></span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <footer id="footer" class="site-footer" th:fragment="footer">
+        <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+        <script th:src="@{/js/jquery-ui.js}"></script>
+        <script th:src="@{/js/popper.min.js}"></script>
+        <script th:src="@{/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/owl.carousel.min.js}"></script>
+        <script th:src="@{/js/jquery.countdown.min.js}"></script>
+        <script th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+        <script th:src="@{/js/jquery.easing.1.3.js}"></script>
+        <script th:src="@{/js/aos.js}"></script>
+        <script th:src="@{/js/jquery.fancybox.min.js}"></script>
+        <script th:src="@{/js/jquery.sticky.js}"></script>
+        <script th:src="@{/js/main.js}"></script>
+        <script th:src="@{/js/call-api.js}"></script>
+        <script th:src="@{/js/diachi.js}"></script>
+        <script th:src="@{/js/paging-phong.js}"></script>
+        <script th:src="@{/js/custom-function.js}"></script>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h2 class="footer-heading mb-4">Sản phẩm: Tìm phòng</h2>
+                            <p></p>
+                        </div>
+                        <div class="col-md-4 mx-auto">
+                            <h2 class="footer-heading mb-4">Email: hokimtien2002@gmail.com</h2>
+                            <p></p>
+                        </div>
+                        <div class="col-md-4">
+                            <h2 class="footer-heading mb-4">Liên hệ: 0825003361</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-5 mt-5 text-center">
+                <div class="col-md-12">
+                    <div class="border-top pt-5">
+                        <p class="copyright">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

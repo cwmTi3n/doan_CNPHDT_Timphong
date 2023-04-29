@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head">
+        <title>Quản lý Web</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="" />
+        <link rel="shortcut icon" th:href="@{/images/Logo.png}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+        <link type="text/css" th:href="@{/css/font-family.css}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" th:href="@{/fonts/icomoon/style.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/header-admin.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/owl.carousel.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/owl.theme.default.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/owl.theme.default.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/base-admin.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/jquery.fancybox.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-datepicker.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/fonts/flaticon/font/flaticon.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/aos.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-admin.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-web.css}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            ul > li > a.active-admin{
+                background-color: #fff !important;
+            }
+        </style>
+    </head>
+<body>
+    <header class="site-navbar site-navbar--admin js-sticky-header site-navbar-target" role="banner" th:fragment="left">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <div class="site-blocks-cover site-blocks-cover--admin inner-page-cover overlay" data-aos="fade">
+            <div class="container">
+                <div class="row align-items-center row-admin">
+
+                    <div class="col-12 col-xl-12">
+                        <h1 class="mb-0 site-logo site-logo--admin m-0 p-4">
+                            <a th:href="@{/trangchu}" class="mb-0">Tìm Phòng</a>
+                        </h1>
+                    </div>
+
+                    <div class="col-12 col-md-12 d-xl-block">
+                        <nav class="site-navigation position-relative text-left"
+                            role="navigation">
+                            <ul
+                                class="site-menu site-menu--admin main-menu js-clone-nav mr-auto d-none d-lg-block">
+                                <li><a th:href="@{/admin/statistics}" class="nav-link">Tổng quan</a></li>
+                                <li><a id="ql-phong" th:href="@{/admin/phong}" class="nav-link">Quản lý bài viết</a></li>
+                                <li><a id="ql-loaiphong" th:href="@{/admin/loaiphong}" class="nav-link">Quản lý loại phòng</a></li>
+                                <li><a id="ql-tk" th:href="@{/admin/taikhoan}" class="nav-link">Quản lý tài khoản</a></li>
+                                <li><a th:href="@{/admin/profile}" class="nav-link">Thông tin Admin</a></li>
+                                <li><a th:href="@{/logout}" class="nav-link">Đăng xuất</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-6 d-none d-xl-none ml-md-0 py-3">
+                        <a href="#"
+                            class="site-menu-toggle js-menu-toggle text-white float-right"><span
+                            class="icon-menu h3"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <footer th:fragment="footer">
+        <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+        <script th:src="@{/js/jquery-ui.js}"></script>
+        <script th:src="@{/js/popper.min.js}"></script>
+        <script th:src="@{/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/owl.carousel.min.js}"></script>
+        <script th:src="@{/js/jquery.countdown.min.js}"></script>
+        <script th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+        <script th:src="@{/js/jquery.easing.1.3.js}"></script>
+        <script th:src="@{/js/aos.js}"></script>
+        <script th:src="@{/js/jquery.fancybox.min.js}"></script>
+        <script th:src="@{/js/jquery.sticky.js}"></script>
+        <script th:src="@{/js/main.js}"></script>
+        <script th:src="@{/js/call-api.js}"></script>
+        <script th:src="@{/js/paging-tk.js}"></script>
+        <script th:src="@{/js/paging-phong.js}"></script>
+        <script th:src="@{/js/diachi.js}"></script>
+        <script th:src="@{/js/custom-function.js}"></script>
+    </footer>
+</body>
+</html>

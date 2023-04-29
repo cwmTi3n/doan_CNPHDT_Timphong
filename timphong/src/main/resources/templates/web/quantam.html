@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/layout-web :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" onLoad="active()">
+	<div class="site-wrap">
+		<div class="site-mobile-menu site-navbar-target">
+			<div class="site-mobile-menu-header">
+				<div class="site-mobile-menu-close mt-3">
+					<span class="icon-close2 js-menu-toggle"></span>
+				</div>
+			</div>
+			<div class="site-mobile-menu-body"></div>
+		</div>
+        <div id="sticky-wrapper" class="sticky-wrapper">
+            <header th:replace="/layout-web :: header"></header>
+        </div>
+        <!--Body-->
+        <div class="site-section site-section-phong">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12 table-web">
+                        <div class="table-web-layer">
+                            <h2 class="text-black mb-4 text-center">Đang quan tâm</h2>
+                            <table class="table table-hover text-dark">
+                                <thead class="thead-dark">
+                                    <tr>
+        
+                                        <th class="col-2" scope="col">Hình ảnh</th>
+                                        <th class="col-2" scope="col">Tên phòng</th>
+                                        <th class="col-1" scope="col">Giá</th>
+                                        <th class="col-1" scope="col">Diện tích</th>
+                                        <th class="col-5" scope="col">Địa chỉ</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr th:each="qt : ${quantams}">
+                                            <td class="col-2">
+                                                <a th:href="@{/detail-phong/{phongId}(phongId=${qt.phong.phongId})}">
+                                                    <img class="img-thumbnail img--phong__small" th:src="${qt.phong.anhchinh}" />
+                                                </a>
+                                            </td>
+                                            <td class="col-2" th:text="${qt.phong.ten}"></td>
+                                            <td class="col-1" th:text="${qt.phong.gia}"></td>
+                                            <td class="col-1" th:text="${qt.phong.chieudai} + '*' + ${qt.phong.chieurong}"></td>
+                                            <td class="col-5" th:text="${qt.phong.diachi} + ', ' + ${qt.phong.diachict}"></td>
+                                            
+                                            <td>
+                                                <a class="btn btn-danger btn-save-profile"
+                                                th:href="@{/account/list-quantam/delete/{id}(id=${qt.quantamId})}"><i class="bi bi-trash"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a
+                                                class="btn btn-success btn-save-profile"
+                                                th:href="@{/detail-phong/{id}(id=${qt.phong.phongId})}"><i class="bi bi-calendar2-plus"></i></i></a>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-web :: footer"></footer>
+</body>
+</html>

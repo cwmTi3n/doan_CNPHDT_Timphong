@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/layout-web :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" onLoad="active()">
+	<div class="site-wrap">
+		<div class="site-mobile-menu site-navbar-target">
+			<div class="site-mobile-menu-header">
+				<div class="site-mobile-menu-close mt-3">
+					<span class="icon-close2 js-menu-toggle"></span>
+				</div>
+			</div>
+			<div class="site-mobile-menu-body"></div>
+		</div>
+        <div id="sticky-wrapper" class="sticky-wrapper">
+            <header th:replace="/layout-web :: header"></header>
+        </div>
+        <!--Body-->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css">
+        <div class="site-section site-section-phong">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12 table-web">
+                        <div class="table-web-layer">
+                            <h2 class="text-black mb-4 text-center">Xác nhận lịch hẹn</h2>
+        
+                            <div class=" border-bottom my-4">
+                                <ul class="row justify-content-around">
+                                    <li class="d-inline-block"><a
+                                        class="px-5 py-2 a-hanhdong"
+                                        th:href="@{/seller/quanly-lichhen}" 
+                                        th:classappend="${trangthai==0?'text-white bg-dark':'text-dark' }">Chờ xác nhận</a></li>
+                                    <li class="d-inline-block"><a
+                                        class="px-5 py-2 a-hanhdong"
+                                        th:classappend="${trangthai==1?'text-white bg-dark':'text-dark' }"
+                                        th:href="@{/seller/quanly-lichhen?trangthai=1}">Đã xác nhận</a></li>
+                                    <li class="d-inline-block"><a
+                                        class="px-5 py-2 a-hanhdong"
+                                        th:classappend="${trangthai==2?'text-white bg-dark':'text-dark' }"
+                                        th:href="@{/seller/quanly-lichhen?trangthai=2}">Đã hủy</a></li>
+                                </ul>
+                                <table class="table table-hover text-dark">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Hình ảnh</th>
+                                            <th scope="col">Tên phòng</th>
+                                            <th scope="col">Giá</th>
+                                            <th scope="col">Địa chỉ</th>
+                                            <th scope="col">Thời gian</th>
+                                            <th scope="col">Liên hệ</th>
+                                            <th th:if="${trangthai == 0}" scope="col"></th>
+                                            <th th:if="${trangthai == 0}" scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr th:each="lh : ${lichhens}">
+                                                <td><a th:href="@{/detail-phong/{id}(id=${lh.phong.phongId})}">
+                                                        <img class="img-thumbnail img--phong__small" th:src="@{${lh.phong.anhchinh}}" />
+                                                    </a>
+                                                </td>
+                                                <td th:text="${lh.phong.ten}"></td>
+                                                <td th:text="${lh.phong.gia}"></td>
+                                                <td th:text="${lh.phong.diachi} + ', ' + ${lh.phong.diachict}"></td>
+                                                <td th:text="${lh.ngay} + ', ' + ${lh.gio}"></td>
+                                                <td th:text="${lh.taikhoan.sdt}"></td>
+                                                <td th:if="${trangthai==0}">
+                                                    <a class="btn btn-danger btn-save-profile"
+                                                        th:href="@{/seller/huy-lichhen(lichhenId=${lh.lichhenId})}"><i class="bi bi-x-circle"></i></a>
+                                                </td>
+                                                <td th:if="${trangthai==0}">
+                                                    <a
+                                                    class="btn btn-success btn-save-profile"
+                                                    th:href="@{/seller/xacnhan-lichhen(lichhenId=${lh.phong.phongId}, lichhenId=${lh.lichhenId})}"><i class="bi bi-check-circle"></i></a>
+                                                </td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-web :: footer"></footer>
+</body>
+</html>
