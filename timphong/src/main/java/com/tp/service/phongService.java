@@ -34,4 +34,5 @@ public interface phongService {
 															String orderby, int page, int size);
 	int phongHien();
 	int phongAn();
+	void deletePhongExpire();
 }

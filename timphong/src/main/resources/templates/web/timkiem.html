@@ -83,9 +83,8 @@
 								<button class="btn button mt-2 px-3 py-1 btn-find" type="submit">Tìm</button>
 							</form>
 						</div>
-						<div class="select-wrap">
-							<div class="mb-1">
-								<select
+						<div class="mb-1">
+							<select
 								onchange="callFromLoc('web')" name="orderby" id="orderby"
 								class="form-control px-3">
 								<option value="ten">Mặc định</option>
@@ -94,7 +93,6 @@
 								<option value="gia">Giá từ thấp đến cao</option>
 								<option value="descgia">Giá từ cao đến thấp</option>
 							</select>
-						</div>
 						</div>
 						<div th:with="phongs=${pPhong.getContent()}" id="load" class="row large-gutters">
 								<div th:each="phong : ${phongs}" class="phong col-md-6 col-lg-4 mb-1 mb-lg-4 ">

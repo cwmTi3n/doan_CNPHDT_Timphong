@@ -1,5 +1,8 @@
 package com.tp.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -126,5 +129,17 @@ public class phongServiceImpl implements phongService{
 	@Override
 	public int phongAn() {
 		return phongRepository.findByTrangthai(false).size();
+	}
+
+	@Override
+	public void deletePhongExpire() {
+		List<phongEntity> phongs = phongRepository.findAll();
+		long currentTimeMillis = new Date().getTime();
+		long sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000; 
+		for(phongEntity p : phongs) {
+			if(currentTimeMillis - p.getNgaydang().getTime() > sevenDaysInMillis) {
+				phongRepository.delete(p);
+			}
+		}
 	}
 }

@@ -124,6 +124,7 @@ public class crudPhongSellerController {
 		BeanUtils.copyProperties(phongModel, phongEntity);
 		phongEntity.setLoaiphong(lpEntity);
 		phongEntity oldPhogEntity = phongService.findById(true, phongModel.getPhongId());
+		phongEntity.setNgaydang(oldPhogEntity.getNgaydang());
 		String oldFilename = oldPhogEntity.getAnhchinh();
 		if(phongModel.getAnhchinh() == null || phongModel.getAnhchinh().isEmpty()) {
 			phongEntity.setAnhchinh(oldFilename);
