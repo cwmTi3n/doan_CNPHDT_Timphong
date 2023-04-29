@@ -1,6 +1,8 @@
 package com.tp.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +18,6 @@ public interface taikhoanRepository extends JpaRepository<taikhoanEntity, Intege
 	Page<taikhoanEntity> searchTaikhoan(roleEnum role, String keyword, Pageable pageable);
 
 	taikhoanEntity findByUsername(String username);
+
+	List<taikhoanEntity> findByRole(roleEnum role);
 }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout-admin :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    <div class="site-wrap site-wrap--admin">
+        <div id="sticky-wrapper" class="sticky-wrapper sticky-wrapper--admin">
+            <header th:replace="/layout-admin :: header"></header>
+        </div>
+        <!--Body-->
+			<div class="col-10">
+                    <div class="row">
+                        <div class="col s6">
+                            <div style="padding: 35px; height: 350px" align="center"
+                                class="card">
+                                <div class="row">
+                                    <div class="left card-title">
+                                        <b>Quản lý người dùng</b>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <a href="#!">
+                                        <div style="padding: 30px;"
+                                            class="grey lighten-3 col s5 waves-effect">
+                                            <i
+                                                class="indigo-text text-lighten-1 large material-icons bi bi-person-fill"
+                                                style="font-size: 50px; color: black"></i> <span
+                                                class="indigo-text text-lighten-1"><h5 th:text="'Sellers: ' + ${seller}"></h5></span>
+                                        </div>
+                                    </a>
+
+                                    <div class="col s1">&nbsp;</div>
+                                    <div class="col s1">&nbsp;</div>
+
+                                    <a href="#!">
+                                        <div style="padding: 30px;"
+                                            class="grey lighten-3 col s5 waves-effect">
+                                            <i
+                                                class="indigo-text text-lighten-1 large material-icons bi bi-person-fill"
+                                                style="font-size: 50px; color: black"></i> <span
+                                                class="indigo-text text-lighten-1"><h5 th:text="'Users: ' + ${user}"></h5></span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col s6">
+                            <div style="padding: 35px; height: 350px" align="center"
+                                class="card">
+                                <div class="row">
+                                    <div class="left card-title">
+                                        <b>Quản lí phòng</b>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <a href="#!">
+                                        <div style="padding: 30px;"
+                                            class="grey lighten-3 col s5 waves-effect">
+                                            <i
+                                                class="indigo-text text-lighten-1 large material-icons bi bi-house-check"
+                                                style="font-size: 35px; color: black"></i> <span
+                                                class="indigo-text text-lighten-1"><h5 th:text="'Phòng đang hiện: ' + ${hien}"></h5></span>
+                                        </div>
+                                    </a>
+
+                                    <div class="col s1">&nbsp;</div>
+                                    <div class="col s1">&nbsp;</div>
+
+                                    <a href="#!">
+                                        <div style="padding: 30px;"
+                                            class="grey lighten-3 col s5 waves-effect">
+                                            <i
+                                                class="indigo-text text-lighten-1 large material-icons bi bi-house-lock"
+                                                style="font-size: 35px; color: black"></i> <span
+                                                class="indigo-text text-lighten-1"><h5 th:text="'Phòng đang ẩn: ' + ${an}"></h5></span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+        <!--/Body-->
+    </div>
+    <footer th:replace="/layout-admin :: footer"></footer>
+</body>
+</html>

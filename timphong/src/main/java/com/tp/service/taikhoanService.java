@@ -26,4 +26,6 @@ public interface taikhoanService {
 	Page<taikhoanEntity> searchTaikhoan(int page, int size, roleEnum role, String keyword);
 	
 	taikhoanEntity findByUsername(String username);
+
+	int findByRole(roleEnum role);
 }

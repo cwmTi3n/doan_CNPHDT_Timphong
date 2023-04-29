@@ -117,4 +117,14 @@ public class phongServiceImpl implements phongService{
 		}
 		return phongRepository.sellerFilterPhong(id, keyword, loaiphongId, tinh, huyen, xa, pageable);		
 	}
+
+	@Override
+	public int phongHien() {
+		return phongRepository.findByTrangthai(true).size();
+	}
+
+	@Override
+	public int phongAn() {
+		return phongRepository.findByTrangthai(false).size();
+	}
 }

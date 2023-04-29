@@ -1,5 +1,7 @@
 package com.tp.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,4 +38,6 @@ public interface phongRepository extends JpaRepository<phongEntity, Integer>{
 
     @Query("select p from phongEntity p where p.taikhoan.taikhoanId = :id and p.trangthai = true and (p.ten like %:keyword% or p.mota like %:keyword%) and diachi like %:tinh% and diachi like %:huyen% and diachi like %:xa%")
     Page<phongEntity> sellerFilterPhongNoLoaiphong(Integer id, String keyword, String tinh, String huyen, String xa, Pageable pageable);
+
+    List<phongEntity> findByTrangthai(boolean trangthai);
 }

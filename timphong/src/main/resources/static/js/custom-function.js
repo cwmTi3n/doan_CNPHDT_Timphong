@@ -203,6 +203,7 @@ function quantam() {
 
 function active() {
     var pathname = window.location.pathname;
+    var thongke = document.getElementById('thongke');
     var trangchu = document.getElementById('trangchu');
     var timkiem = document.getElementById('timkiem');
     var dangnhap = document.getElementById('dangnhap');
@@ -210,16 +211,6 @@ function active() {
     var adminQlphong = document.getElementById('ql-phong');
     var adminQllh = document.getElementById('ql-loaiphong');
     var adminQltk = document.getElementById('ql-tk');
-    var protocol = window.location.protocol;
-    var host = window.location.host;
-    var search = window.location.search;
-    var hash = window.location.hash;
-
-    console.log("Giao thức: " + protocol);
-    console.log("Tên miền và cổng: " + host);
-    console.log("Đường dẫn: " + pathname);
-    console.log("Tham số truy vấn: " + search);
-    console.log("Mảnh định danh: " + hash);
 
     if (pathname == '/timkiem') {
         timkiem.style.backgroundColor="#5a6763";
@@ -241,6 +232,9 @@ function active() {
     }
     else if (pathname == '/admin/taikhoan' || pathname == '/admin/chinhsua-taikhoan' || pathname == '/admin/them-taikhoan') {
         adminQltk.classList.add('active-admin');
+    }
+    else if (pathname == '/admin/thongke') {
+        thongke.classList.add('active-admin');
     }
 }
 active();

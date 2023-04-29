@@ -74,4 +74,9 @@ public class taikhoanServiceImpl implements taikhoanService{
 		return taikhoanRepository.findByUsername(username);
 	}
 
+	@Override
+	public int findByRole(roleEnum role) {
+		return taikhoanRepository.findByRole(role).size();
+	}
+
 }

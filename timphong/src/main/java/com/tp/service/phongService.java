@@ -32,4 +32,6 @@ public interface phongService {
 															String huyen,
 															String xa,
 															String orderby, int page, int size);
+	int phongHien();
+	int phongAn();
 }
