@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class binhluanModel {
+public class BinhluanModel {
     private int binhluanId;
     private String noidung;
     private int taikhoanId;

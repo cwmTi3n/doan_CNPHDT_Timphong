@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tp.entity.binhluanEntity;
-import com.tp.service.binhluanService;
+import com.tp.entity.BinhluanEntity;
+import com.tp.service.BinhluanService;
 
 @Controller
-public class loadBinhluanController {
-    @Autowired binhluanService binhluanService;
+public class LoadBinhluanController {
+    @Autowired
+    BinhluanService binhluanService;
     @GetMapping("/binhluan")
     @ResponseBody
-    public List<binhluanEntity> get(@RequestParam int id) {
+    public List<BinhluanEntity> getBinhluan(@RequestParam int id) {
         return binhluanService.findByPhongId(id);
     }
 }

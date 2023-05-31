@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tp.entity.lichhenEntity;
-import com.tp.entity.phongEntity;
-import com.tp.entity.quantamEntity;
-import com.tp.entity.taikhoanEntity;
-import com.tp.model.customUserDetail;
-import com.tp.service.lichhenService;
-import com.tp.service.phongService;
-import com.tp.service.quantamService;
+import com.tp.entity.LichhenEntity;
+import com.tp.entity.PhongEntity;
+import com.tp.entity.QuantamEntity;
+import com.tp.entity.TaikhoanEntity;
+import com.tp.model.CustomUserDetail;
+import com.tp.service.LichhenService;
+import com.tp.service.PhongService;
+import com.tp.service.QuantamService;
 
 @Controller
 @RequestMapping("detail-phong")
-public class detailPhongController {
+public class DetailPhongController {
     @Autowired
-    phongService phongService;
+    PhongService phongService;
     @Autowired
-    lichhenService lichhenService;
+    LichhenService lichhenService;
     @Autowired
-    quantamService quantamService;
+    QuantamService quantamService;
     @GetMapping("{id}")
     public String detailPhong(ModelMap map, @PathVariable("id") Integer id, @RequestParam(defaultValue = "0") int lichhenId) {
-        phongEntity phongEntity = phongService.findById(true, id);
+        PhongEntity phongEntity = phongService.findById(true, id);
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            customUserDetail userDetails = (customUserDetail) authentication.getPrincipal();
-            taikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
+            CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
+            TaikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
             if(taikhoanEntity != null) {
-                lichhenEntity lichhenEntity = lichhenService.findById(lichhenId);
-                quantamEntity quantamEntity = quantamService.findByTaikhoanAndPhong(taikhoanEntity, phongEntity);
+                LichhenEntity lichhenEntity = lichhenService.findById(lichhenId);
+                QuantamEntity quantamEntity = quantamService.findByTaikhoanAndPhong(taikhoanEntity, phongEntity);
                 if(lichhenEntity != null) {
                     map.addAttribute("lichhen", lichhenEntity);
                 }
@@ -53,4 +53,12 @@ public class detailPhongController {
         map.addAttribute("phong", phongEntity);
         return "web/phong";
     }
+
+    @GetMapping("vi-pham/{id}")
+    public String phongVipham(ModelMap map, @PathVariable("id") Integer id) {
+        PhongEntity phongEntity = phongService.findById(false, id);
+        map.addAttribute("phong", phongEntity);
+        return "web/phong-vipham";
+    }
+
 }

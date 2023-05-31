@@ -6,13 +6,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.tp.service.imageService;
+import com.tp.service.ImageService;
 
 @SpringBootApplication
 public class TimphongApplication implements CommandLineRunner{
 
 	@Resource
-	imageService imageService;
+    ImageService imageService;
 	public static void main(String[] args) {
 		SpringApplication.run(TimphongApplication.class, args);
 	}

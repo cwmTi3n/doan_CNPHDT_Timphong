@@ -1,4 +1,3 @@
-
 function countTime(){
     // Đặt giá trị thời gian kết thúc là 0
     var countDownDate = new Date().getTime() + 60 * 1000;
@@ -28,7 +27,7 @@ function countTime(){
 
 
 function sendCode(btn) {
-    btn.textContent = "Send...";
+    btn.textContent = "Đang gửi...";
     var us = document.getElementById('username').value;
     var fmSendcode = document.getElementById('send-code');
     var fmChangePw = document.getElementById('change-pw');
@@ -45,7 +44,8 @@ function sendCode(btn) {
             countTime();
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            // Xử lý lỗi
+            alert("Có lỗi xảy ra");
+            location.reload();
         }
     });
 }

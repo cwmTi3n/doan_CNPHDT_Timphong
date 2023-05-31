@@ -6,9 +6,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.tp.entity.binhluanEntity;
+import com.tp.entity.BinhluanEntity;
 
-public interface binhluanRepository extends JpaRepository<binhluanEntity, Integer>{
-    @Query("select bl from binhluanEntity bl where bl.phong.phongId = :id")
-    List<binhluanEntity> findByPhongId(int id, Sort sort);
+public interface BinhluanRepository extends JpaRepository<BinhluanEntity, Integer>{
+    @Query("select bl from BinhluanEntity bl where bl.phong.phongId = :id")
+    List<BinhluanEntity> findByPhongId(int id, Sort sort);
 }

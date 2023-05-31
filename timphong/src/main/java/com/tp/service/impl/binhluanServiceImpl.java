@@ -6,28 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.tp.entity.binhluanEntity;
-import com.tp.repository.binhluanRepository;
-import com.tp.service.binhluanService;
+import com.tp.entity.BinhluanEntity;
+import com.tp.repository.BinhluanRepository;
+import com.tp.service.BinhluanService;
 
 @Service
-public class binhluanServiceImpl implements binhluanService{
+public class BinhluanServiceImpl implements BinhluanService {
     @Autowired
-    binhluanRepository binhluanRepository;
+    BinhluanRepository binhluanRepository;
 
     @Override
-    public <S extends binhluanEntity> S saveRequest(S entity) {
+    public <S extends BinhluanEntity> S saveRequest(S entity) {
         return binhluanRepository.save(entity);
     }
 
     @Override
-    public List<binhluanEntity> findByPhongId(int id) {
+    public List<BinhluanEntity> findByPhongId(int id) {
         Sort sort = Sort.by(Sort.Direction.DESC, "thoigian");
         return binhluanRepository.findByPhongId(id, sort);
     }
 
     @Override
-    public binhluanEntity findById(int id) {
+    public BinhluanEntity findById(int id) {
         return binhluanRepository.findById(id).orElse(null);
     }
     

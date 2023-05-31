@@ -11,23 +11,23 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tp.entity.roleEnum;
-import com.tp.entity.taikhoanEntity;
-import com.tp.repository.taikhoanRepository;
-import com.tp.service.taikhoanService;
+import com.tp.entity.TaikhoanEntity;
+import com.tp.repository.TaikhoanRepository;
+import com.tp.service.TaikhoanService;
 
 @Service
-public class taikhoanServiceImpl implements taikhoanService{
+public class TaikhoanServiceImpl implements TaikhoanService {
 	@Autowired
-	taikhoanRepository taikhoanRepository;
+    TaikhoanRepository taikhoanRepository;
 	
 	@Override
-	public List<taikhoanEntity> findAll(){
+	public List<TaikhoanEntity> findAll(){
 		return taikhoanRepository.findAll();
 	}
 	
 	@Override
-	public taikhoanEntity findById(Integer id) {
-		Optional<taikhoanEntity> optional = taikhoanRepository.findById(id);
+	public TaikhoanEntity findById(Integer id) {
+		Optional<TaikhoanEntity> optional = taikhoanRepository.findById(id);
 		if(optional != null) {
 			if(optional.isPresent()) {
 				return optional.get();
@@ -42,35 +42,35 @@ public class taikhoanServiceImpl implements taikhoanService{
 	}
 	
 	@Override
-	public void delete(taikhoanEntity taikhoanEntity) {
+	public void delete(TaikhoanEntity taikhoanEntity) {
 		taikhoanRepository.delete(taikhoanEntity);
 	}
 	
 	@Override
-	public <S extends taikhoanEntity> S SavedRequest(S entity) {
+	public <S extends TaikhoanEntity> S SavedRequest(S entity) {
 		return taikhoanRepository.save(entity);
 	}
 	
 	@Override
-	public Page<taikhoanEntity> findAllSeller(int page, int size){
+	public Page<TaikhoanEntity> findAllSeller(int page, int size){
 		Pageable pageable = PageRequest.of(page, size, Sort.by("username"));
 		return taikhoanRepository.findAllByRole(roleEnum.SELLER, pageable);
 	}
 	
 	@Override
-	public Page<taikhoanEntity> findAllUser(int page, int size) {
+	public Page<TaikhoanEntity> findAllUser(int page, int size) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by("username"));
 		return taikhoanRepository.findAllByRole(roleEnum.USER, pageable);
 	}
 
 	@Override
-	public Page<taikhoanEntity> searchTaikhoan(int page, int size, roleEnum role, String keyword) {
+	public Page<TaikhoanEntity> searchTaikhoan(int page, int size, roleEnum role, String keyword) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by("username"));
 		return taikhoanRepository.searchTaikhoan(role, keyword, pageable);
 	}
 
 	@Override
-	public taikhoanEntity findByUsername(String username) {
+	public TaikhoanEntity findByUsername(String username) {
 		return taikhoanRepository.findByUsername(username);
 	}
 

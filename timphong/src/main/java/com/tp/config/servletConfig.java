@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 //Bỏ jsessionid cho các tài nguyên tỉnh
 @Configuration
-public class servletConfig {
+public class ServletConfig {
     @Bean
     public ServletContextInitializer servletContextInitializer() {
         return servletContext -> {

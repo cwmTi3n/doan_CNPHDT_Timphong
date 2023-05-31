@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tp.entity.loaiphongEntity;
-import com.tp.model.loaiphongModel;
-import com.tp.service.loaiphongService;
+import com.tp.entity.LoaiphongEntity;
+import com.tp.model.LoaiphongModel;
+import com.tp.service.LoaiphongService;
 
 @Controller
 @RequestMapping("admin")
-public class crudLoaiphongAdminController {
+public class CrudLoaiphongAdminController {
 	@Autowired
-	loaiphongService loaiphongService;
+    LoaiphongService loaiphongService;
 	@GetMapping("loaiphong")
 	public String getLoaiphong(ModelMap map) {
-		List<loaiphongEntity> lps = loaiphongService.findAll();
+		List<LoaiphongEntity> lps = loaiphongService.findAll();
 		map.addAttribute("loaiphongs", lps);
 		return "admin/list-loaiphong";
 	}
@@ -36,8 +36,8 @@ public class crudLoaiphongAdminController {
 	}
 	
 	@PostMapping("save-loaiphong")
-	public String themLoaiphong(@Valid @ModelAttribute("loaiphong") loaiphongModel loaiphong) {
-		loaiphongEntity loaiphongEntity = new loaiphongEntity();
+	public String themLoaiphong(@Valid @ModelAttribute("loaiphong") LoaiphongModel loaiphong) {
+		LoaiphongEntity loaiphongEntity = new LoaiphongEntity();
 		BeanUtils.copyProperties(loaiphong, loaiphongEntity);
 		loaiphongService.SavedRequest(loaiphongEntity);
 		return "redirect:/admin/loaiphong";
@@ -51,7 +51,7 @@ public class crudLoaiphongAdminController {
 	
 	@GetMapping("chinhsua-loaiphong")
 	public String chinhsuaLoaiphong(@RequestParam("id") Integer id, ModelMap map) {
-		loaiphongEntity lpEntity = loaiphongService.findById(id);
+		LoaiphongEntity lpEntity = loaiphongService.findById(id);
 		map.addAttribute("lp", lpEntity);
 		return "admin/save-loaiphong";
 	}

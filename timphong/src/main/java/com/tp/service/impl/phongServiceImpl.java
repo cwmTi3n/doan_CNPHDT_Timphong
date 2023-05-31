@@ -10,33 +10,33 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.tp.entity.loaiphongEntity;
-import com.tp.entity.phongEntity;
-import com.tp.entity.taikhoanEntity;
-import com.tp.repository.phongRepository;
-import com.tp.service.loaiphongService;
-import com.tp.service.phongService;
-import com.tp.service.taikhoanService;
+import com.tp.entity.LoaiphongEntity;
+import com.tp.entity.PhongEntity;
+import com.tp.entity.TaikhoanEntity;
+import com.tp.repository.PhongRepository;
+import com.tp.service.LoaiphongService;
+import com.tp.service.PhongService;
+import com.tp.service.TaikhoanService;
 
 @Service
-public class phongServiceImpl implements phongService{
+public class PhongServiceImpl implements PhongService {
 	@Autowired
-	phongRepository phongRepository;
+    PhongRepository phongRepository;
 	
 	@Autowired
-	loaiphongService loaiphongService;
+    LoaiphongService loaiphongService;
 
 	@Autowired
-	taikhoanService taikhoanService;
+	TaikhoanService taikhoanService;
 
 	@Override
-	public Page<phongEntity> findAll(boolean trangthai, int page, int size, String orderby){
+	public Page<PhongEntity> findAll(boolean trangthai, int page, int size, String orderby){
 		Pageable pageable = PageRequest.of(page, size, getSort(orderby));
 		return phongRepository.findByTrangthai(trangthai, pageable);
 	}
 	
 	@Override
-	public phongEntity findById(boolean trangthai, Integer id) {
+	public PhongEntity findById(boolean trangthai, Integer id) {
 		return phongRepository.findByTrangthaiAndPhongId(trangthai, id);
 	}
 	
@@ -46,31 +46,31 @@ public class phongServiceImpl implements phongService{
 	}
 	
 	@Override
-	public void delete(phongEntity phongEntity) {
+	public void delete(PhongEntity phongEntity) {
 		phongRepository.delete(phongEntity);
 	}
 	
 	@Override
-	public <S extends phongEntity> S SavedRequest(S entity) {
+	public <S extends PhongEntity> S SavedRequest(S entity) {
 		return phongRepository.save(entity);
 	}
 
 	@Override
-	public Page<phongEntity> searchPhong(boolean trangthai, String keyword, String orderby, int page, int size) {
+	public Page<PhongEntity> searchPhong(boolean trangthai, String keyword, String orderby, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(orderby));
 		return phongRepository.searchPhong(trangthai, keyword, pageable);
 	}
 
 	@Override
-	public Page<phongEntity> findByLoaiphong(boolean trangthai, Integer loaiphongId, String orderby, int page, int size) {
+	public Page<PhongEntity> findByLoaiphong(boolean trangthai, Integer loaiphongId, String orderby, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size, getSort(orderby));
-		loaiphongEntity loaiphongEntity = loaiphongService.findById(loaiphongId);
+		LoaiphongEntity loaiphongEntity = loaiphongService.findById(loaiphongId);
 		return phongRepository.findByLoaiphongAndTrangthai(loaiphongEntity, trangthai, pageable);
 	}
 
 	@Override
-	public Page<phongEntity> filterPhong(boolean trangthai, String keyword, Integer loaiphongId, String tinh, String huyen, String xa, String orderby,
-			int page, int size) {
+	public Page<PhongEntity> filterPhong(boolean trangthai, String keyword, Integer loaiphongId, String tinh, String huyen, String xa, String orderby,
+										 int page, int size) {
 		Pageable pageable = PageRequest.of(page, size, getSort(orderby));
 		if(keyword.equals("") && loaiphongId == 0 && tinh.equals("")) {
 			return phongRepository.findByTrangthai(trangthai, pageable);
@@ -83,9 +83,9 @@ public class phongServiceImpl implements phongService{
 
 	//seller
 	@Override
-	public Page<phongEntity> findBySeller(Integer id, int page, int size, String orderby) {
+	public Page<PhongEntity> findBySeller(Integer id, int page, int size, String orderby) {
 		Pageable pageable = PageRequest.of(page, size, getSort(orderby));
-		taikhoanEntity taikhoanEntity = taikhoanService.findById(id);
+		TaikhoanEntity taikhoanEntity = taikhoanService.findById(id);
 		return phongRepository.findByTaikhoanAndTrangthai(taikhoanEntity, true, pageable);
 	}
 
@@ -102,17 +102,17 @@ public class phongServiceImpl implements phongService{
 	}
 
 	@Override
-	public Page<phongEntity> sellerSearchphong(Integer id, String keyword, int page, int size, String orderby) {
+	public Page<PhongEntity> sellerSearchphong(Integer id, String keyword, int page, int size, String orderby) {
 		Pageable pageable = PageRequest.of(page, size, getSort(orderby));
 		return phongRepository.sellerSearchphong(id, keyword, pageable);
 	}
 
 	@Override
-	public Page<phongEntity> sellerFilterphong(Integer id, String keyword, Integer loaiphongId, String tinh,
-			String huyen, String xa, String orderby, int page, int size) {
+	public Page<PhongEntity> sellerFilterphong(Integer id, String keyword, Integer loaiphongId, String tinh,
+											   String huyen, String xa, String orderby, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size, getSort(orderby));
 		if(keyword.equals("") && loaiphongId == 0 && tinh.equals("")) {
-			taikhoanEntity taikhoanEntity = taikhoanService.findById(id);
+			TaikhoanEntity taikhoanEntity = taikhoanService.findById(id);
 			return phongRepository.findByTaikhoanAndTrangthai(taikhoanEntity, true, pageable);
 		}
 		if(loaiphongId == 0) {
@@ -133,10 +133,10 @@ public class phongServiceImpl implements phongService{
 
 	@Override
 	public void deletePhongExpire() {
-		List<phongEntity> phongs = phongRepository.findAll();
+		List<PhongEntity> phongs = phongRepository.findAll();
 		long currentTimeMillis = new Date().getTime();
 		long sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000; 
-		for(phongEntity p : phongs) {
+		for(PhongEntity p : phongs) {
 			if(currentTimeMillis - p.getNgaydang().getTime() > sevenDaysInMillis) {
 				phongRepository.delete(p);
 			}

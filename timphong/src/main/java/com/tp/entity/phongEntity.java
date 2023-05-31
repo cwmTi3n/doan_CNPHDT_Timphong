@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 @Entity
 
 @Table(name = "phong")
-public class phongEntity implements Serializable{
+public class PhongEntity implements Serializable{
 
 	/**
 	 * 
@@ -82,25 +82,25 @@ public class phongEntity implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "loaiphongId")
 	@JsonIgnore
-	private loaiphongEntity loaiphong;
+	private LoaiphongEntity loaiphong;
 	
 	@ManyToOne()
 	@JsonManagedReference
 	@JoinColumn(name = "taikhoanId")
-	private taikhoanEntity taikhoan;
+	private TaikhoanEntity taikhoan;
 
 	@OneToMany(mappedBy = "phong", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<binhluanEntity> binhluans;
-
-	@OneToMany(mappedBy = "phong", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<lichhenEntity> lichhens;
+	private List<BinhluanEntity> binhluans;
 
 	@OneToMany(mappedBy = "phong", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<quantamEntity> quantams;
+	private List<LichhenEntity> lichhens;
 
 	@OneToMany(mappedBy = "phong", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<hinhanhEntity> hinhanhs;
+	private List<QuantamEntity> quantams;
+
+	@OneToMany(mappedBy = "phong", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<HinhanhEntity> hinhanhs;
 }

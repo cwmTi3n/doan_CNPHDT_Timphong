@@ -1,5 +1,6 @@
 package com.tp.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,15 +18,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class quantamEntity {
+public class QuantamEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "quantamId")
     private int quantamId;
+
     @ManyToOne()
     @JoinColumn(name = "taikhoanId")
-    private taikhoanEntity taikhoan;
+    private TaikhoanEntity taikhoan;
 
     @ManyToOne()
     @JoinColumn(name = "phongId")
-    private phongEntity phong;
+    private PhongEntity phong;
 }

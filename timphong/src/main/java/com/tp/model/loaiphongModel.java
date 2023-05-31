@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class loaiphongModel {
+public class LoaiphongModel {
 	private int loaiphongId;
 	private String name;
 }

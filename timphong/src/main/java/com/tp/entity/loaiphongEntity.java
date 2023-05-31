@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "loaiphong")
-public class loaiphongEntity implements Serializable {/**
+public class LoaiphongEntity implements Serializable {/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class loaiphongEntity implements Serializable {/**
 	
 	@OneToMany(mappedBy = "loaiphong", fetch = FetchType.LAZY)
 	@JsonIgnore	
-	private List<phongEntity> phongs;
+	private List<PhongEntity> phongs;
 	
 	@PreRemove
 	private void proRemove() {

@@ -2,13 +2,13 @@ package com.tp.service;
 
 import java.util.List;
 
-import com.tp.entity.hinhanhEntity;
-import com.tp.entity.phongEntity;
+import com.tp.entity.HinhanhEntity;
+import com.tp.entity.PhongEntity;
 
-public interface hinhanhService {
-    <S extends hinhanhEntity> S SavedRequest(S entity);
+public interface HinhanhService {
+    <S extends HinhanhEntity> S SavedRequest(S entity);
     void deleteById(int id);
-    List<hinhanhEntity> findByPhong(phongEntity phongEntity);
-    hinhanhEntity findByUrl(String url);
-    hinhanhEntity findById(int id);
+    List<HinhanhEntity> findByPhong(PhongEntity phongEntity);
+    HinhanhEntity findByUrl(String url);
+    HinhanhEntity findById(int id);
 }

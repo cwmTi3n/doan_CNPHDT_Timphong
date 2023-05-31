@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tp.service.imageService;
+import com.tp.service.ImageService;
 
 @Controller
 @RequestMapping("image/{filename}")
-public class imageController {
+public class ImageController {
 	@Autowired
-	imageService imageService;
+    ImageService imageService;
 	@GetMapping("")
 	@ResponseBody
 	public ResponseEntity<Resource> getImage(@PathVariable String filename) {

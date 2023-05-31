@@ -2,6 +2,8 @@ package com.tp.controller.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,33 +16,40 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tp.entity.phongEntity;
-import com.tp.entity.quantamEntity;
-import com.tp.entity.taikhoanEntity;
-import com.tp.model.customUserDetail;
-import com.tp.service.phongService;
-import com.tp.service.quantamService;
+import com.tp.entity.PhongEntity;
+import com.tp.entity.QuantamEntity;
+import com.tp.entity.TaikhoanEntity;
+import com.tp.model.CustomUserDetail;
+import com.tp.service.PhongService;
+import com.tp.service.QuantamService;
+import com.tp.service.WSService;
+import com.tp.util.Constant;
 
 @Controller
-public class quantamController {
+public class QuantamController {
     @Autowired
-    quantamService quantamService;
+    QuantamService quantamService;
     @Autowired
-    phongService phongService;
+    PhongService phongService;
+    @Autowired
+    WSService wsService;
     @PostMapping("/quantam")
     @ResponseBody
-    public ResponseEntity<String> quantam(@RequestParam int phongId) {
+    public ResponseEntity<String> quantam(@RequestParam int phongId, HttpServletRequest request) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            customUserDetail userDetails = (customUserDetail) authentication.getPrincipal();
-            taikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
-            phongEntity phongEntity = phongService.findById(true, phongId);
-            quantamEntity quantamEntity = quantamService.findByTaikhoanAndPhong(taikhoanEntity, phongEntity);
+            CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
+            TaikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
+            PhongEntity phongEntity = phongService.findById(true, phongId);
+            QuantamEntity quantamEntity = quantamService.findByTaikhoanAndPhong(taikhoanEntity, phongEntity);
             if(quantamEntity == null) {
-                quantamEntity = new quantamEntity();
+                quantamEntity = new QuantamEntity();
                 quantamEntity.setPhong(phongEntity);
                 quantamEntity.setTaikhoan(taikhoanEntity);
                 quantamService.SavedRequest(quantamEntity);
+                String noidung = "Tôi quan tâm đến phòng này của bạn: ";
+                String url = Constant.protocol + request.getServerName() + "/detail-phong/" + phongEntity.getPhongId();
+                wsService.sendMessage(taikhoanEntity, phongEntity.getTaikhoan(), noidung + url);
                 return ResponseEntity.ok("<i class=\"bi bi-heart-fill mr-1\"></i>Đang quan tâm");
             }
             else {
@@ -57,9 +66,9 @@ public class quantamController {
     @GetMapping("account/list-quantam")
     public String getQuantam(ModelMap map) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        customUserDetail userDetails = (customUserDetail) authentication.getPrincipal();
-        taikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
-        List<quantamEntity> quantams = quantamService.findByTaikhoan(taikhoanEntity);
+        CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
+        TaikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
+        List<QuantamEntity> quantams = quantamService.findByTaikhoan(taikhoanEntity);
         map.addAttribute("quantams", quantams);
         return "web/quantam.html";
     }

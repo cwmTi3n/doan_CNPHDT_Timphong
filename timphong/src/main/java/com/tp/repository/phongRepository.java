@@ -7,37 +7,37 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.tp.entity.loaiphongEntity;
-import com.tp.entity.phongEntity;
-import com.tp.entity.taikhoanEntity;
+import com.tp.entity.LoaiphongEntity;
+import com.tp.entity.PhongEntity;
+import com.tp.entity.TaikhoanEntity;
 
-public interface phongRepository extends JpaRepository<phongEntity, Integer>{
-    @Query("select p from phongEntity p where p.trangthai = :trangthai and (p.ten like %:keyword% or p.mota like %:keyword%)")
-    Page<phongEntity> searchPhong(boolean trangthai, String keyword, Pageable pageable);
+public interface PhongRepository extends JpaRepository<PhongEntity, Integer>{
+    @Query("select p from PhongEntity p where p.trangthai = :trangthai and (p.ten like %:keyword% or p.mota like %:keyword%)")
+    Page<PhongEntity> searchPhong(boolean trangthai, String keyword, Pageable pageable);
 
-    @Query("select p from phongEntity p where p.trangthai = :trangthai and (p.ten like %:keyword% or p.mota like %:keyword%) and p.loaiphong.loaiphongId = :loaiphongId and diachi like %:tinh% and diachi like %:huyen% and diachi like %:xa%")
-    Page<phongEntity> filterPhong(boolean trangthai, String keyword ,Integer loaiphongId, String tinh, String huyen, String xa, Pageable pageable);
+    @Query("select p from PhongEntity p where p.trangthai = :trangthai and (p.ten like %:keyword% or p.mota like %:keyword%) and p.loaiphong.loaiphongId = :loaiphongId and diachi like %:tinh% and diachi like %:huyen% and diachi like %:xa%")
+    Page<PhongEntity> filterPhong(boolean trangthai, String keyword , Integer loaiphongId, String tinh, String huyen, String xa, Pageable pageable);
 
-    @Query("select p from phongEntity p where p.trangthai = :trangthai and (p.ten like %:keyword% or p.mota like %:keyword%) and diachi like %:tinh% and diachi like %:huyen% and diachi like %:xa%")
-    Page<phongEntity> filterPhongNoLoaiphong(boolean trangthai, String keyword, String tinh, String huyen, String xa, Pageable pageable);
+    @Query("select p from PhongEntity p where p.trangthai = :trangthai and (p.ten like %:keyword% or p.mota like %:keyword%) and diachi like %:tinh% and diachi like %:huyen% and diachi like %:xa%")
+    Page<PhongEntity> filterPhongNoLoaiphong(boolean trangthai, String keyword, String tinh, String huyen, String xa, Pageable pageable);
     
-    Page<phongEntity> findByLoaiphongAndTrangthai(loaiphongEntity loaiphongEntity, boolean trangthai, Pageable pageable);
+    Page<PhongEntity> findByLoaiphongAndTrangthai(LoaiphongEntity loaiphongEntity, boolean trangthai, Pageable pageable);
 
-    Page<phongEntity> findByTrangthai(boolean trangthai, Pageable pageable);
+    Page<PhongEntity> findByTrangthai(boolean trangthai, Pageable pageable);
 
-    phongEntity findByTrangthaiAndPhongId(boolean trangthai, Integer phongId);
+    PhongEntity findByTrangthaiAndPhongId(boolean trangthai, Integer phongId);
 
     //seller
-    @Query("select p from phongEntity p where p.trangthai = true and p.taikhoan.taikhoanId = :id and (p.ten like %:keyword% or p.mota like %:keyword%)")
-    Page<phongEntity> sellerSearchphong(Integer id, String keyword, Pageable pageable);
+    @Query("select p from PhongEntity p where p.trangthai = true and p.taikhoan.taikhoanId = :id and (p.ten like %:keyword% or p.mota like %:keyword%)")
+    Page<PhongEntity> sellerSearchphong(Integer id, String keyword, Pageable pageable);
 
-    Page<phongEntity> findByTaikhoanAndTrangthai(taikhoanEntity taikhoanEntity, boolean trangthai, Pageable pageable);
+    Page<PhongEntity> findByTaikhoanAndTrangthai(TaikhoanEntity taikhoanEntity, boolean trangthai, Pageable pageable);
 
-    @Query("select p from phongEntity p where p.taikhoan.taikhoanId = :id and p.trangthai = true and (p.ten like %:keyword% or p.mota like %:keyword%) and p.loaiphong.loaiphongId = :loaiphongId and diachi like %:tinh% and diachi like %:huyen% and diachi like %:xa%")
-    Page<phongEntity> sellerFilterPhong(Integer id, String keyword ,Integer loaiphongId, String tinh, String huyen, String xa, Pageable pageable);
+    @Query("select p from PhongEntity p where p.taikhoan.taikhoanId = :id and p.trangthai = true and (p.ten like %:keyword% or p.mota like %:keyword%) and p.loaiphong.loaiphongId = :loaiphongId and diachi like %:tinh% and diachi like %:huyen% and diachi like %:xa%")
+    Page<PhongEntity> sellerFilterPhong(Integer id, String keyword , Integer loaiphongId, String tinh, String huyen, String xa, Pageable pageable);
 
-    @Query("select p from phongEntity p where p.taikhoan.taikhoanId = :id and p.trangthai = true and (p.ten like %:keyword% or p.mota like %:keyword%) and diachi like %:tinh% and diachi like %:huyen% and diachi like %:xa%")
-    Page<phongEntity> sellerFilterPhongNoLoaiphong(Integer id, String keyword, String tinh, String huyen, String xa, Pageable pageable);
+    @Query("select p from PhongEntity p where p.taikhoan.taikhoanId = :id and p.trangthai = true and (p.ten like %:keyword% or p.mota like %:keyword%) and diachi like %:tinh% and diachi like %:huyen% and diachi like %:xa%")
+    Page<PhongEntity> sellerFilterPhongNoLoaiphong(Integer id, String keyword, String tinh, String huyen, String xa, Pageable pageable);
 
-    List<phongEntity> findByTrangthai(boolean trangthai);
+    List<PhongEntity> findByTrangthai(boolean trangthai);
 }

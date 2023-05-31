@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/layout-web :: head">
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" onLoad="active()">
+	<div class="site-wrap">
+		<div class="site-mobile-menu site-navbar-target">
+			<div class="site-mobile-menu-header">
+				<div class="site-mobile-menu-close mt-3">
+					<span class="icon-close2 js-menu-toggle"></span>
+				</div>
+			</div>
+			<div class="site-mobile-menu-body"></div>
+		</div>
+        <div id="sticky-wrapper" class="sticky-wrapper">
+            <header th:replace="/layout-web :: header"></header>
+        </div>
+        <!--Body-->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/chat.css}">
+        <div class="site-section site-section-phong">
+          <h1 class="text-center page-title">Danh sách tin nhắn</h1>
+            <div class="container">
+              <a th:each="tinnhan : ${tinnhans}" th:href="@{/account/room-chat/{id}(id=${tinnhan.nguoinhan.taikhoanId})}">
+                <div class="chat-room">
+                  <img class="avatar rounded-circle" th:src="${tinnhan.nguoinhan.anhdd}" alt="Avatar" onerror="this.src = '/images/avatar.jpg'">
+                  <div>
+                    <span class="room-name" th:text="${tinnhan.nguoinhan.hoten}"></span>
+                    <p class="latest-message">
+                      <span th:text="${tinnhan.noidung}"></span>
+                      <span th:if="${tinnhan.trangthai == 2}" class="unread-dot" style="display: inline-block;
+                      width: 8px;
+                      height: 8px;
+                      background-color: green;
+                      border-radius: 50%;
+                      margin-left: 5px;"></span>
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+        </div>
+        <!--/Body-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+    </div>
+    <footer th:replace="/layout-web :: footer"></footer>
+</body>
+</html>

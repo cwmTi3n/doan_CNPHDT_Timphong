@@ -2,18 +2,18 @@ package com.tp.service;
 
 import java.util.List;
 
-import com.tp.entity.loaiphongEntity;
+import com.tp.entity.LoaiphongEntity;
 
-public interface loaiphongService {
+public interface LoaiphongService {
 
-	<S extends loaiphongEntity> S SavedRequest(S entity);
+	<S extends LoaiphongEntity> S SavedRequest(S entity);
 
-	void delete(loaiphongEntity loaiphongEntity);
+	void delete(LoaiphongEntity loaiphongEntity);
 
 	void deleteById(Integer id);
 
-	loaiphongEntity findById(Integer id);
+	LoaiphongEntity findById(Integer id);
 
-	List<loaiphongEntity> findAll();
+	List<LoaiphongEntity> findAll();
 
 }

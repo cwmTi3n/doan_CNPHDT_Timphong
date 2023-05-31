@@ -2,17 +2,17 @@ package com.tp.service;
 
 import java.util.List;
 
-import com.tp.entity.lichhenEntity;
-import com.tp.entity.taikhoanEntity;
+import com.tp.entity.LichhenEntity;
+import com.tp.entity.TaikhoanEntity;
 import com.tp.entity.ttlichhenEnum;
 
-public interface lichhenService {
-    <S extends lichhenEntity> S SavedRequest(S entity);
-    List<lichhenEntity> findAll();
-    List<lichhenEntity> findByTaikhoanId(int id);
-    lichhenEntity findByTaikhoanAndPhong(int taikhoanId, int phongId);
-    List<lichhenEntity> findByTrangthai(ttlichhenEnum trangthai, taikhoanEntity taikhoanEntity);
+public interface LichhenService {
+    <S extends LichhenEntity> S SavedRequest(S entity);
+    List<LichhenEntity> findAll();
+    List<LichhenEntity> findByTaikhoanId(int id);
+    LichhenEntity findByTaikhoanAndPhong(int taikhoanId, int phongId);
+    List<LichhenEntity> findByTrangthai(ttlichhenEnum trangthai, TaikhoanEntity taikhoanEntity);
     void deleteById(int id);
-    lichhenEntity findById(int id);
-    List<lichhenEntity> findBySellerAndTrangthai(int taikhoanId, ttlichhenEnum trangthai);
+    LichhenEntity findById(int id);
+    List<LichhenEntity> findBySellerAndTrangthai(int taikhoanId, ttlichhenEnum trangthai);
 }

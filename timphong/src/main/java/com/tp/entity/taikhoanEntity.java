@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Entity
 
 @Table(name = "taikhoan")
-public class taikhoanEntity implements Serializable{/**
+public class TaikhoanEntity implements Serializable{/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -64,7 +64,7 @@ public class taikhoanEntity implements Serializable{/**
 	
 	@OneToMany(mappedBy = "taikhoan", fetch = FetchType.LAZY)
 	@JsonBackReference
-	private List<phongEntity> phongs;
+	private List<PhongEntity> phongs;
 	
 	@PreRemove
 	private void proRemove() {
@@ -72,18 +72,26 @@ public class taikhoanEntity implements Serializable{/**
 	}
 	@OneToMany(mappedBy = "taikhoan", fetch = FetchType.LAZY)
 	@JsonBackReference
-	private List<binhluanEntity> binhluans;
+	private List<BinhluanEntity> binhluans;
 	
 	@OneToMany(mappedBy = "taikhoan", fetch = FetchType.LAZY)
 	@JsonBackReference
-	private List<traloiEntity> tralois;
+	private List<TraloiEntity> tralois;
 
 	@OneToMany(mappedBy = "taikhoan", fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<lichhenEntity> lichhens;
+	private List<LichhenEntity> lichhens;
 
 	@OneToMany(mappedBy = "taikhoan", fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<quantamEntity> quantams;
+	private List<QuantamEntity> quantams;
+
+	@OneToMany(mappedBy = "nguoigui", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<TinNhanEntity> tindaguis;
+
+	@OneToMany(mappedBy = "nguoinhan", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<TinNhanEntity> tindanhans;
 	
 }

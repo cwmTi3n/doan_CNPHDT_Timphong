@@ -28,34 +28,35 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "traloi")
-public class traloiEntity implements Serializable{
+public class TraloiEntity implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "traloiId")
     private int traloiId;
 
     @Column(name = "noidung", columnDefinition = "nvarchar(500)")
     private String noidung;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "thoigian")
     private Date thoigian;
 
     @ManyToOne()
     @JoinColumn(name = "binhluanId")
     @JsonBackReference
-    private binhluanEntity binhluan;
+    private BinhluanEntity binhluan;
 
     @ManyToOne()
     @JoinColumn(name = "taikhoanId")
     @JsonManagedReference
-    private taikhoanEntity taikhoan;
+    private TaikhoanEntity taikhoan;
 
     @ManyToOne
     @JoinColumn(name = "parent_traloiId")
     @JsonBackReference
-    private traloiEntity traloi;
+    private TraloiEntity traloi;
 
     @OneToMany(mappedBy = "traloi", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<traloiEntity> tralois;
+    private List<TraloiEntity> tralois;
 }

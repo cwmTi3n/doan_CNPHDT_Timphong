@@ -5,19 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tp.entity.phongEntity;
-import com.tp.entity.quantamEntity;
-import com.tp.entity.taikhoanEntity;
-import com.tp.repository.quantamRepository;
-import com.tp.service.quantamService;
+import com.tp.entity.PhongEntity;
+import com.tp.entity.QuantamEntity;
+import com.tp.entity.TaikhoanEntity;
+import com.tp.repository.QuantamRepository;
+import com.tp.service.QuantamService;
 
 @Service
-public class quantamServiceImpl implements quantamService{
+public class QuantamServiceImpl implements QuantamService {
     @Autowired
-    quantamRepository quantamRepository;
+    QuantamRepository quantamRepository;
 
     @Override
-    public <S extends quantamEntity> S SavedRequest(S entity) {
+    public <S extends QuantamEntity> S SavedRequest(S entity) {
         return quantamRepository.save(entity);
     }
 
@@ -27,12 +27,12 @@ public class quantamServiceImpl implements quantamService{
     }
 
     @Override
-    public quantamEntity findByTaikhoanAndPhong(taikhoanEntity taikhoanEntity, phongEntity phongEntity) {
+    public QuantamEntity findByTaikhoanAndPhong(TaikhoanEntity taikhoanEntity, PhongEntity phongEntity) {
         return quantamRepository.findByTaikhoanAndPhong(taikhoanEntity, phongEntity);
     }
 
     @Override
-    public List<quantamEntity> findByTaikhoan(taikhoanEntity taikhoanEntity) {
+    public List<QuantamEntity> findByTaikhoan(TaikhoanEntity taikhoanEntity) {
         return quantamRepository.findByTaikhoan(taikhoanEntity);
     }
 

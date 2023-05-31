@@ -7,24 +7,24 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.tp.service.impl.customUserDetailService;
+import com.tp.service.impl.CustomUserDetailService;
 
 @Configuration
 @Order(1)
-public class webSecurity {
+public class WebSecurity {
     @Bean
     public UserDetailsService userDetailsService() {
-        return new customUserDetailService();
+        return new CustomUserDetailService();
     }
      
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -41,7 +41,7 @@ public class webSecurity {
         http.authorizeRequests(request -> request
                 .antMatchers("/", "/trangchu" ,"/timkiem", "/detail-phong/**")
                     .permitAll()
-                .antMatchers("/admin/**", "/seller/**", "/profile/**", "/account/**", "/dathen", "/quantam")
+                .antMatchers("/admin/**", "/seller/**", "/profile/**", "/account/**", "/dathen", "/quantam", "/app/private-message")
                     .authenticated())
             .formLogin(login -> login
                 .loginPage("/login")

@@ -6,15 +6,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.tp.entity.roleEnum;
-import com.tp.service.phongService;
-import com.tp.service.taikhoanService;
+import com.tp.service.PhongService;
+import com.tp.service.TaikhoanService;
 
 @Controller
-public class thongkeWeb {
+public class ThongkeWeb {
     @Autowired
-    phongService phongService;
+    PhongService phongService;
     @Autowired
-    taikhoanService taikhoanService;
+    TaikhoanService taikhoanService;
     @GetMapping("admin/thongke")
     public String thongke(ModelMap map) {
         int user = taikhoanService.findByRole(roleEnum.USER);

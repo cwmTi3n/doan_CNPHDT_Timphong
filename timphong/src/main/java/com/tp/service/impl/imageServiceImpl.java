@@ -6,21 +6,17 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.UUID;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tp.service.imageService;
+import com.tp.service.ImageService;
 
 @Service
-public class imageServiceImpl implements imageService{
+public class ImageServiceImpl implements ImageService {
 	private final Path root = Paths.get("uploads");
 	@Override
 	public void init() {

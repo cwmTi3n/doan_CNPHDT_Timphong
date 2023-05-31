@@ -5,40 +5,40 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tp.entity.lichhenEntity;
-import com.tp.entity.taikhoanEntity;
+import com.tp.entity.LichhenEntity;
+import com.tp.entity.TaikhoanEntity;
 import com.tp.entity.ttlichhenEnum;
-import com.tp.repository.lichhenRepository;
-import com.tp.service.lichhenService;
+import com.tp.repository.LichhenRepository;
+import com.tp.service.LichhenService;
 
 @Service
-public class lichhenServiceImpl implements lichhenService{
+public class LichhenServiceImpl implements LichhenService {
 
     @Autowired
-    lichhenRepository lichhenRepository;
+    LichhenRepository lichhenRepository;
     @Override
-    public <S extends lichhenEntity> S SavedRequest(S entity) {
+    public <S extends LichhenEntity> S SavedRequest(S entity) {
         return lichhenRepository.save(entity);
     }
 
     @Override
-    public List<lichhenEntity> findAll() {
+    public List<LichhenEntity> findAll() {
         return lichhenRepository.findAll();
     }
 
     @Override
-    public List<lichhenEntity> findByTaikhoanId(int id) {
+    public List<LichhenEntity> findByTaikhoanId(int id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByTaikhoanId'");
     }
 
     @Override
-    public lichhenEntity findByTaikhoanAndPhong(int taikhoanId, int phongId) {
+    public LichhenEntity findByTaikhoanAndPhong(int taikhoanId, int phongId) {
         return lichhenRepository.findByTaikhoanIdAndPhongId(taikhoanId, phongId);
     }
 
     @Override
-    public List<lichhenEntity> findByTrangthai(ttlichhenEnum trangthai, taikhoanEntity taikhoanEntity) {
+    public List<LichhenEntity> findByTrangthai(ttlichhenEnum trangthai, TaikhoanEntity taikhoanEntity) {
         return lichhenRepository.findByTrangthaiAndTaikhoan(trangthai, taikhoanEntity);
     }
 
@@ -48,12 +48,12 @@ public class lichhenServiceImpl implements lichhenService{
     }
 
     @Override
-    public lichhenEntity findById(int id) {
+    public LichhenEntity findById(int id) {
         return lichhenRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<lichhenEntity> findBySellerAndTrangthai(int taikhoanId, ttlichhenEnum trangthai) {
+    public List<LichhenEntity> findBySellerAndTrangthai(int taikhoanId, ttlichhenEnum trangthai) {
         return lichhenRepository.findBySellerAndTrangthai(taikhoanId, trangthai);
     }
     

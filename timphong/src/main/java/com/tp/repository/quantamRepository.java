@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tp.entity.phongEntity;
-import com.tp.entity.quantamEntity;
-import com.tp.entity.taikhoanEntity;
+import com.tp.entity.PhongEntity;
+import com.tp.entity.QuantamEntity;
+import com.tp.entity.TaikhoanEntity;
 
-public interface quantamRepository extends JpaRepository<quantamEntity, Integer>{
-    quantamEntity findByTaikhoanAndPhong(taikhoanEntity taikhoan, phongEntity phong);
-    List<quantamEntity> findByTaikhoan(taikhoanEntity taikhoanEntity);
+public interface QuantamRepository extends JpaRepository<QuantamEntity, Integer>{
+    QuantamEntity findByTaikhoanAndPhong(TaikhoanEntity taikhoan, PhongEntity phong);
+    List<QuantamEntity> findByTaikhoan(TaikhoanEntity taikhoanEntity);
 }

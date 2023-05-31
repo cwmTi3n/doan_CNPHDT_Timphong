@@ -25,34 +25,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tp.entity.hinhanhEntity;
-import com.tp.entity.loaiphongEntity;
-import com.tp.entity.phongEntity;
-import com.tp.model.customUserDetail;
-import com.tp.model.phongModel;
+import com.tp.entity.HinhanhEntity;
+import com.tp.entity.LoaiphongEntity;
+import com.tp.entity.PhongEntity;
+import com.tp.model.CustomUserDetail;
+import com.tp.model.PhongModel;
 
 @Controller
 @RequestMapping("seller")
-public class crudPhongSellerController {
+public class CrudPhongSellerController {
 	@Autowired
-	taikhoanService taikhoanService;
+	TaikhoanService taikhoanService;
 	@Autowired
-	phongService phongService;
+	PhongService phongService;
 	@Autowired
-	loaiphongService loaiphongService;
+	LoaiphongService loaiphongService;
 	@Autowired
-	imageService imageService;
+	ImageService imageService;
 	@Autowired
-	cloudinaryService cloudinaryService;
+    CloudinaryService cloudinaryService;
 	@Autowired
-	hinhanhService hinhanhService;
+	HinhanhService hinhanhService;
 	@GetMapping("phong")
 	public String getQuanlyphong(@RequestParam(name = "keyword", defaultValue = "") String keyword,
 	@RequestParam(name = "orderby", defaultValue = "ten") String orderby, ModelMap map, HttpSession session) {
-		List<loaiphongEntity> loaiphongs = loaiphongService.findAll();
-		Page<phongEntity> pPhong;
+		List<LoaiphongEntity> loaiphongs = loaiphongService.findAll();
+		Page<PhongEntity> pPhong;
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		customUserDetail userDetails = (customUserDetail) authentication.getPrincipal();
+		CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
 		if(keyword.equals("")) {
 			pPhong = phongService.findBySeller(userDetails.getTaikhoanentity().getTaikhoanId(), 0, Constant.PAGESIZE_PHONG, orderby);
 		}
@@ -66,12 +66,12 @@ public class crudPhongSellerController {
 	}
 	
 	@PostMapping("them-phong")
-	public String themPhong(@Valid @ModelAttribute("phong") phongModel phongModel,
+	public String themPhong(@Valid @ModelAttribute("phong") PhongModel phongModel,
 	@RequestParam MultipartFile anhphu1, @RequestParam MultipartFile anhphu2) throws IOException {
 		phongModel.setTrangthai(true);
 		phongModel.setNgaydang(new Date());
-		phongEntity phongEntity = new phongEntity();
-		loaiphongEntity lpEntity = loaiphongService.findById(phongModel.getLoaiphongId());
+		PhongEntity phongEntity = new PhongEntity();
+		LoaiphongEntity lpEntity = loaiphongService.findById(phongModel.getLoaiphongId());
 		BeanUtils.copyProperties(phongModel, phongEntity);
 		phongEntity.setLoaiphong(lpEntity);
 		// String filename = imageService.save(phongModel.getAnhchinh());
@@ -79,7 +79,7 @@ public class crudPhongSellerController {
 		phongEntity.setAnhchinh(filename);
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		customUserDetail userDetails = (customUserDetail) authentication.getPrincipal();
+		CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
 
 		phongEntity.setTaikhoan(userDetails.getTaikhoanentity());	
 		if(phongService.SavedRequest(phongEntity) != null) {
@@ -91,9 +91,9 @@ public class crudPhongSellerController {
 	
 	@GetMapping("xoa-phong")
 	public String xoaPhong(@RequestParam("id") Integer id) throws IOException {
-		phongEntity phongEntity = phongService.findById(true, id);
-		List<hinhanhEntity> hinhanhs = hinhanhService.findByPhong(phongEntity);
-		for(hinhanhEntity ha : hinhanhs) {
+		PhongEntity phongEntity = phongService.findById(true, id);
+		List<HinhanhEntity> hinhanhs = hinhanhService.findByPhong(phongEntity);
+		for(HinhanhEntity ha : hinhanhs) {
 			cloudinaryService.deleteImage(ha.getUrl());
 		}
 		// imageService.delete(phongEntity.getAnhchinh());
@@ -104,26 +104,26 @@ public class crudPhongSellerController {
 	
 	@GetMapping("chinhsua-phong")
 	public String getFormChinhsuaPhong(@RequestParam("id") Integer id, ModelMap map) {
-		phongEntity phongEntity = phongService.findById(true, id);
-		List<loaiphongEntity> loaiphongs = loaiphongService.findAll();
+		PhongEntity phongEntity = phongService.findById(true, id);
+		List<LoaiphongEntity> loaiphongs = loaiphongService.findAll();
 		map.addAttribute("loaiphongs", loaiphongs);
 		map.addAttribute("phong", phongEntity);
-		List<hinhanhEntity> hinhanhs = phongEntity.getHinhanhs();
+		List<HinhanhEntity> hinhanhs = phongEntity.getHinhanhs();
 		map.addAttribute("hinhanhs", hinhanhs);
 		return "seller/chinhsua-phong";
 	}
 	
 	@PostMapping("chinhsua-phong")
-	public String chinhsuaPhong(@Valid @ModelAttribute("phong") phongModel phongModel, 
+	public String chinhsuaPhong(@Valid @ModelAttribute("phong") PhongModel phongModel,
 	@RequestParam MultipartFile anhphu1, 
 	@RequestParam MultipartFile anhphu2,
 	@RequestParam(defaultValue = "") String url1,
 	@RequestParam(defaultValue = "") String url2) throws IOException {
-		phongEntity phongEntity = new phongEntity();
-		loaiphongEntity lpEntity = loaiphongService.findById(phongModel.getLoaiphongId());
+		PhongEntity phongEntity = new PhongEntity();
+		LoaiphongEntity lpEntity = loaiphongService.findById(phongModel.getLoaiphongId());
 		BeanUtils.copyProperties(phongModel, phongEntity);
 		phongEntity.setLoaiphong(lpEntity);
-		phongEntity oldPhogEntity = phongService.findById(true, phongModel.getPhongId());
+		PhongEntity oldPhogEntity = phongService.findById(true, phongModel.getPhongId());
 		phongEntity.setNgaydang(oldPhogEntity.getNgaydang());
 		String oldFilename = oldPhogEntity.getAnhchinh();
 		if(phongModel.getAnhchinh() == null || phongModel.getAnhchinh().isEmpty()) {
@@ -139,7 +139,7 @@ public class crudPhongSellerController {
 		phongEntity.setTrangthai(true);
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		customUserDetail userDetails = (customUserDetail) authentication.getPrincipal();
+		CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
 
 		phongEntity.setTaikhoan(userDetails.getTaikhoanentity());
 		phongService.SavedRequest(phongEntity);
@@ -150,7 +150,7 @@ public class crudPhongSellerController {
 
 	@GetMapping("delete-anhphu/{id}")
 	public String deleteAnhphu(@PathVariable int id) throws IOException {
-		hinhanhEntity hinhanhEntity = hinhanhService.findById(id);
+		HinhanhEntity hinhanhEntity = hinhanhService.findById(id);
 		if(hinhanhEntity != null) {
 			hinhanhService.deleteById(id);
 			cloudinaryService.deleteImage(hinhanhEntity.getUrl());
@@ -159,11 +159,11 @@ public class crudPhongSellerController {
 		return "redirect:/seller/phong";
 	}
 
-	private void savaImage(MultipartFile image, phongEntity phongEntity) {
+	private void savaImage(MultipartFile image, PhongEntity phongEntity) {
 		try {
 			String filename = cloudinaryService.uploadFile(image);
 			if(filename != null) {
-				hinhanhEntity hinhanhEntity = new hinhanhEntity();
+				HinhanhEntity hinhanhEntity = new HinhanhEntity();
 				hinhanhEntity.setPhong(phongEntity);
 				hinhanhEntity.setUrl(filename);
 				hinhanhService.SavedRequest(hinhanhEntity);
@@ -172,13 +172,13 @@ public class crudPhongSellerController {
 		}
 	}
 
-	private void editImage(MultipartFile newImage, String url, phongEntity phongEntity) throws IOException {
+	private void editImage(MultipartFile newImage, String url, PhongEntity phongEntity) throws IOException {
 		if( newImage != null && !newImage.isEmpty()) {
 			if(url.equals("")) {
 				savaImage(newImage, phongEntity);
 			}
 			else {
-				hinhanhEntity hinhanhEntity = hinhanhService.findByUrl(url);
+				HinhanhEntity hinhanhEntity = hinhanhService.findByUrl(url);
 				if(hinhanhEntity != null) {
 					cloudinaryService.deleteImage(url);
 					String filename = cloudinaryService.uploadFile(newImage);

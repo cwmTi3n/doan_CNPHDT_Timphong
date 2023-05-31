@@ -39,18 +39,27 @@
             <div class="row align-items-center">
                 <div class="col-6 col-xl-2">
                     <h1 class="mb-0 site-logo p-0">
-                        <a th:href="@{/trangchu}" class="mb-0">Tìm phòng</a>
+                        <a th:href="@{/account/list-chat}" class="mb-0" id="">
+                            Tin nhắn     
+                            <span id="notification-icon" style="display: none;">
+                                <span id="notification-count"></span>
+                            </span>
+                        </nav></a>
                     </h1>
                 </div>
                 <div class="col-12 col-md-10 d-none d-xl-block">
                     <nav class="site-navigation position-relative text-right" role="navigation">
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                            <li sec:authorize="hasAuthority('ADMIN')" class='nav-item'><a th:href="@{/admin/loaiphong}" class="nav-link" onclick="parent.location='/admin/thongke'; return false;">Admin</a></li>
+                            <li sec:authorize="hasAuthority('ADMIN')" class='nav-item'><a th:href="@{/admin/loaiphong}" class="nav-link" onclick="parent.location='/admin/thongke'; return false;">Quản lý</a></li>
                             <li class='nav-item' id="trangchu">
                                 <a th:href="@{/trangchu}" class="nav-link" th:classappend="${active=='trangchu'?'active':''}" onclick="parent.location='/trangchu'; return false;">Trang chủ</a>
                             </li>
                             <li class='nav-item' id="timkiem"><a th:href="@{/timkiem}" class="nav-link" th:classappend="${active=='timkiem'?'active':''}" onclick="parent.location='/timkiem'; return false;">Tìm kiếm</a></li>
-                            <li class='nav-item'><a href="#footer" class="">Liên hệ</a></li>
+                            <!-- <li sec:authorize="isAuthenticated()" class='nav-item'>
+                                <a th:href="@{/account/list-chat}" onclick="parent.location='/account/list-chat'; return false;">
+                                    Tin nhắn
+                                </a>
+                            </li> -->
                             <li sec:authorize="!isAuthenticated()" class='nav-item' id="dangnhap"><a th:href="@{/login}" class="" th:classappend="${active == 'dangnhap' ? 'active':'' }" onclick="parent.location='/login'; return false;">Đăng nhập</a></li>
                             <li sec:authorize="isAuthenticated()" class='nav-item'>
                                 <a href="/profile"class='nav-link' onclick="parent.location='/profile'; return false;">
@@ -71,6 +80,9 @@
         </div>
     </header>
     <footer id="footer" class="site-footer" th:fragment="footer">
+        <script src="/webjars/jquery/jquery.min.js"></script>
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
         <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
         <script th:src="@{/js/jquery-ui.js}"></script>
         <script th:src="@{/js/popper.min.js}"></script>
@@ -87,6 +99,7 @@
         <script th:src="@{/js/diachi.js}"></script>
         <script th:src="@{/js/paging-phong.js}"></script>
         <script th:src="@{/js/custom-function.js}"></script>
+        <script th:src="@{/js/chat.js}"></script>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

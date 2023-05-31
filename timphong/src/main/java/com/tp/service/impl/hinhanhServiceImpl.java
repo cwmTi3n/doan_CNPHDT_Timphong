@@ -5,17 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tp.entity.hinhanhEntity;
-import com.tp.entity.phongEntity;
-import com.tp.repository.hinhanhRepository;
-import com.tp.service.hinhanhService;
+import com.tp.entity.HinhanhEntity;
+import com.tp.entity.PhongEntity;
+import com.tp.repository.HinhanhRepository;
+import com.tp.service.HinhanhService;
 
 @Service
-public class hinhanhServiceImpl implements hinhanhService{
+public class HinhanhServiceImpl implements HinhanhService {
     @Autowired
-    hinhanhRepository hinhanhRepository;
+    HinhanhRepository hinhanhRepository;
     @Override
-    public <S extends hinhanhEntity> S SavedRequest(S entity) {
+    public <S extends HinhanhEntity> S SavedRequest(S entity) {
         return hinhanhRepository.save(entity);
     }
 
@@ -25,17 +25,17 @@ public class hinhanhServiceImpl implements hinhanhService{
     }
 
     @Override
-    public List<hinhanhEntity> findByPhong(phongEntity phongEntity) {
+    public List<HinhanhEntity> findByPhong(PhongEntity phongEntity) {
         return hinhanhRepository.findByPhong(phongEntity);
     }
 
     @Override
-    public hinhanhEntity findByUrl(String url) {
+    public HinhanhEntity findByUrl(String url) {
         return hinhanhRepository.findByUrl(url);
     }
 
     @Override
-    public hinhanhEntity findById(int id) {
+    public HinhanhEntity findById(int id) {
         return hinhanhRepository.findById(id);
     }
     

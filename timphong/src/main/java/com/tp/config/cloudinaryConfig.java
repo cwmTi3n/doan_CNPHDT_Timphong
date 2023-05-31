@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 @Configuration
-public class cloudinaryConfig {
+public class CloudinaryConfig {
     private final String CLOUD_NAME = "dsaslc2qh";
     private final String API_KEY = "877184883312754";
     private final String API_SECRET = "5PBP2fpIxAG1I1ElNI2WxORP4do";

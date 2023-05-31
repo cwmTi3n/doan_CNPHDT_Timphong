@@ -17,28 +17,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tp.entity.roleEnum;
-import com.tp.entity.taikhoanEntity;
-import com.tp.model.taikhoanModel;
-import com.tp.service.cloudinaryService;
-import com.tp.service.imageService;
-import com.tp.service.taikhoanService;
+import com.tp.entity.TaikhoanEntity;
+import com.tp.model.TaikhoanModel;
+import com.tp.service.CloudinaryService;
+import com.tp.service.ImageService;
+import com.tp.service.TaikhoanService;
 import com.tp.util.Constant;
 
 @Controller
 @RequestMapping("admin")
-public class crudTaikhoanAdminController {
+public class CrudTaikhoanAdminController {
 	@Autowired
-	imageService imageService;
+	ImageService imageService;
 	@Autowired
-	taikhoanService taikhoanService;
+	TaikhoanService taikhoanService;
 	@Autowired
-	cloudinaryService cloudinaryService;
+    CloudinaryService cloudinaryService;
 	@GetMapping("taikhoan")
 	public String getListTaikhoan(@RequestParam(name = "page", defaultValue = "1") int page,
 		@RequestParam(name = "keyword", defaultValue = "") String keyword, ModelMap map) {
 		page--;
-		Page<taikhoanEntity> pSeller;
-		Page<taikhoanEntity> pUser;
+		Page<TaikhoanEntity> pSeller;
+		Page<TaikhoanEntity> pUser;
 		if(keyword == "") {
 			pSeller = taikhoanService.findAllSeller(page, Constant.PAGESIZE_TAIKHOAN);
 			pUser = taikhoanService.findAllUser(page, Constant.PAGESIZE_TAIKHOAN);
@@ -59,8 +59,8 @@ public class crudTaikhoanAdminController {
 	}
 	
 	@PostMapping("them-taikhoan")
-	public String themTaikhoan(@Valid @ModelAttribute("taikhoan") taikhoanModel taikhoanModel) throws IOException {
-		taikhoanEntity  taikhoanEntity = new taikhoanEntity();
+	public String themTaikhoan(@Valid @ModelAttribute("taikhoan") TaikhoanModel taikhoanModel) throws IOException {
+		TaikhoanEntity taikhoanEntity = new TaikhoanEntity();
 		BeanUtils.copyProperties(taikhoanModel, taikhoanEntity);
 		taikhoanEntity.setTrangthai(true);
 		// String filename = imageService.save(taikhoanModel.getAnhdd());
@@ -72,16 +72,16 @@ public class crudTaikhoanAdminController {
 	
 	@GetMapping("chinhsua-taikhoan")
 	public String getFormChinhSuaTaikhoan(@RequestParam("id") Integer id, ModelMap map) {
-		taikhoanEntity taikhoanEntity = taikhoanService.findById(id);
+		TaikhoanEntity taikhoanEntity = taikhoanService.findById(id);
 		map.addAttribute("user", taikhoanEntity);
 		return "admin/chinhsua-taikhoan";
 	}
 	
 	@PostMapping("chinhsua-taikhoan")
-	public String chinhsuaTaikhoan(@Valid @ModelAttribute("taikhoan") taikhoanModel taikhoanModel) throws IOException {
-		taikhoanEntity taikhoanEntity = new taikhoanEntity();
+	public String chinhsuaTaikhoan(@Valid @ModelAttribute("taikhoan") TaikhoanModel taikhoanModel) throws IOException {
+		TaikhoanEntity taikhoanEntity = new TaikhoanEntity();
 		BeanUtils.copyProperties(taikhoanModel, taikhoanEntity);
-		taikhoanEntity oldTaikhoan = taikhoanService.findById(taikhoanModel.getTaikhoanId());
+		TaikhoanEntity oldTaikhoan = taikhoanService.findById(taikhoanModel.getTaikhoanId());
 		String oldFilename = oldTaikhoan.getAnhdd();
 		if(taikhoanModel.getAnhdd().isEmpty()) {
 			taikhoanEntity.setAnhdd(oldFilename);
@@ -99,7 +99,7 @@ public class crudTaikhoanAdminController {
 	
 	@GetMapping("xoa-taikhoan")
 	public String xoaTaikhoan(@RequestParam("id") Integer id) throws IOException {
-		taikhoanEntity taikhoanEntity = taikhoanService.findById(id);
+		TaikhoanEntity taikhoanEntity = taikhoanService.findById(id);
 		if(taikhoanEntity != null) {
 			cloudinaryService.deleteImage(taikhoanEntity.getAnhdd());
 			taikhoanService.deleteById(id);

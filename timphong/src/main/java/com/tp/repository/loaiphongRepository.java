@@ -2,8 +2,8 @@ package com.tp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tp.entity.loaiphongEntity;
+import com.tp.entity.LoaiphongEntity;
 
-public interface loaiphongRepository extends JpaRepository<loaiphongEntity, Integer>{
+public interface LoaiphongRepository extends JpaRepository<LoaiphongEntity, Integer>{
 
 }

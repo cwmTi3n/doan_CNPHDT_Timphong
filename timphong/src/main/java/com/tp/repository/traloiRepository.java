@@ -2,8 +2,8 @@ package com.tp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tp.entity.traloiEntity;
+import com.tp.entity.TraloiEntity;
 
-public interface traloiRepository extends JpaRepository<traloiEntity, Integer> {
+public interface TraloiRepository extends JpaRepository<TraloiEntity, Integer> {
     
 }

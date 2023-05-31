@@ -1,8 +1,8 @@
 package com.tp.service;
 
-import com.tp.entity.traloiEntity;
+import com.tp.entity.TraloiEntity;
 
-public interface traloiService {
-    <S extends traloiEntity> S SaveRequest(S entity);
-    traloiEntity findById(int id);
+public interface TraloiService {
+    <S extends TraloiEntity> S SaveRequest(S entity);
+    TraloiEntity findById(int id);
 }

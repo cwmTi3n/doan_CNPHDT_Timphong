@@ -6,22 +6,22 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tp.entity.loaiphongEntity;
-import com.tp.repository.loaiphongRepository;
-import com.tp.service.loaiphongService;
+import com.tp.entity.LoaiphongEntity;
+import com.tp.repository.LoaiphongRepository;
+import com.tp.service.LoaiphongService;
 
 @Service
-public class loaiphongServiceImpl implements loaiphongService{
+public class LoaiphongServiceImpl implements LoaiphongService {
 	@Autowired
-	loaiphongRepository lpRepository;
+    LoaiphongRepository lpRepository;
 	@Override
-	public List<loaiphongEntity> findAll(){
+	public List<LoaiphongEntity> findAll(){
 		return lpRepository.findAll();
 	}
 	
 	@Override
-	public loaiphongEntity findById(Integer id){
-		Optional<loaiphongEntity> lpOptional = lpRepository.findById(id);
+	public LoaiphongEntity findById(Integer id){
+		Optional<LoaiphongEntity> lpOptional = lpRepository.findById(id);
 		if(lpOptional != null) {
 			if(lpOptional.isPresent()) {
 				return lpOptional.get();
@@ -36,12 +36,12 @@ public class loaiphongServiceImpl implements loaiphongService{
 	}
 	
 	@Override
-	public void delete(loaiphongEntity loaiphongEntity) {
+	public void delete(LoaiphongEntity loaiphongEntity) {
 		lpRepository.delete(loaiphongEntity);
 	}
 	
 	@Override
-	public <S extends loaiphongEntity> S SavedRequest(S entity) {
+	public <S extends LoaiphongEntity> S SavedRequest(S entity) {
 		return lpRepository.save(entity);
 	}
 }

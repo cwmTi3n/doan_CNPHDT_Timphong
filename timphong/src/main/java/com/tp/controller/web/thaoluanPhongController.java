@@ -5,17 +5,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.tp.entity.taikhoanEntity;
-import com.tp.entity.traloiEntity;
-import com.tp.model.binhluanModel;
-import com.tp.model.customUserDetail;
-import com.tp.model.traloiModel;
-import com.tp.entity.binhluanEntity;
-import com.tp.entity.phongEntity;
-import com.tp.service.binhluanService;
-import com.tp.service.taikhoanService;
-import com.tp.service.traloiService;
-import com.tp.service.phongService;
+import com.tp.entity.TaikhoanEntity;
+import com.tp.entity.TraloiEntity;
+import com.tp.model.BinhluanModel;
+import com.tp.model.CustomUserDetail;
+import com.tp.model.TraloiModel;
+import com.tp.entity.BinhluanEntity;
+import com.tp.entity.PhongEntity;
+import com.tp.service.BinhluanService;
+import com.tp.service.TaikhoanService;
+import com.tp.service.TraloiService;
+import com.tp.service.PhongService;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.Authentication;
@@ -25,23 +25,23 @@ import java.util.Date;
 
 
 @RestController
-public class thaoluanPhongController {
+public class ThaoluanPhongController {
     @Autowired
-    phongService phongService;
+    PhongService phongService;
     @Autowired
-    taikhoanService taikhoanService;
+    TaikhoanService taikhoanService;
     @Autowired
-    binhluanService binhluanService;
+    BinhluanService binhluanService;
     @Autowired
-    traloiService traloiService;
+    TraloiService traloiService;
     @PostMapping("account/binhluan")
-    public ResponseEntity<?> binhluanPhong(@RequestBody binhluanModel binhluanModel) {
-        binhluanEntity binhluanEntity = new binhluanEntity();
+    public ResponseEntity<?> binhluanPhong(@RequestBody BinhluanModel binhluanModel) {
+        BinhluanEntity binhluanEntity = new BinhluanEntity();
         BeanUtils.copyProperties(binhluanModel, binhluanEntity);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		customUserDetail userDetails = (customUserDetail) authentication.getPrincipal();
-        taikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
-        phongEntity phongEntity = phongService.findById(true, binhluanModel.getPhongId());
+		CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
+        TaikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
+        PhongEntity phongEntity = phongService.findById(true, binhluanModel.getPhongId());
         binhluanEntity.setPhong(phongEntity);
         binhluanEntity.setTaikhoan(taikhoanEntity);
         binhluanEntity.setThoigian(new Date());
@@ -50,16 +50,16 @@ public class thaoluanPhongController {
     }
 
     @PostMapping("account/traloi")
-    public ResponseEntity<?> traloiBinhluan(@RequestBody traloiModel traloiModel) {
-        traloiEntity traloiEntity = new traloiEntity();
+    public ResponseEntity<?> traloiBinhluan(@RequestBody TraloiModel traloiModel) {
+        TraloiEntity traloiEntity = new TraloiEntity();
         BeanUtils.copyProperties(traloiModel, traloiEntity);
         traloiEntity.setThoigian(new Date());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		customUserDetail userDetails = (customUserDetail) authentication.getPrincipal();
-        taikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
-        binhluanEntity binhluanEntity = binhluanService.findById(traloiModel.getBinhluanId());
+		CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
+        TaikhoanEntity taikhoanEntity = userDetails.getTaikhoanentity();
+        BinhluanEntity binhluanEntity = binhluanService.findById(traloiModel.getBinhluanId());
         if(binhluanEntity == null) {
-            traloiEntity parentTraloi = traloiService.findById(traloiModel.getParent_traloiId());
+            TraloiEntity parentTraloi = traloiService.findById(traloiModel.getParent_traloiId());
             traloiEntity.setTraloi(parentTraloi);;
         }
         else {

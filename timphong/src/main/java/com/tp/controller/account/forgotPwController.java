@@ -5,23 +5,24 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tp.entity.taikhoanEntity;
-import com.tp.service.emailService;
-import com.tp.service.taikhoanService;
+import com.tp.entity.TaikhoanEntity;
+import com.tp.service.EmailService;
+import com.tp.service.TaikhoanService;
 import com.tp.util.Constant;
 
 @Controller
-public class forgotPwController {
+public class ForgotPwController {
     @Autowired
-    taikhoanService taikhoanService;
+    TaikhoanService taikhoanService;
     @Autowired
-    emailService emailService;
+    EmailService emailService;
     @GetMapping("forgot-pw")
     public String getForgotPw() {
         return "account/forgot-pw.html";
@@ -30,7 +31,7 @@ public class forgotPwController {
     @PostMapping("forgot-pw")
     @ResponseBody
     public ResponseEntity<String> postForgotPw(@RequestParam String username, HttpServletRequest request) {
-        taikhoanEntity taikhoanEntity = taikhoanService.findByUsername(username);
+        TaikhoanEntity taikhoanEntity = taikhoanService.findByUsername(username);
         if (taikhoanEntity == null) {
             return ResponseEntity.badRequest().body("error");
         }
@@ -48,10 +49,13 @@ public class forgotPwController {
     public ResponseEntity<String> changePw(@RequestParam String code, @RequestParam String password, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
-        taikhoanEntity taikhoanEntity = taikhoanService.findByUsername(username);
+        TaikhoanEntity taikhoanEntity = taikhoanService.findByUsername(username);
         String cfCode = (String)session.getAttribute("code");
         if(cfCode.equals(code)) {
-            taikhoanEntity.setPassword(password);
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encoder = passwordEncoder.encode(password);
+            System.out.println(encoder);
+            taikhoanEntity.setPassword(encoder);
             taikhoanService.SavedRequest(taikhoanEntity);
             return ResponseEntity.ok("Ok");
         }

@@ -8,17 +8,17 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.tp.entity.taikhoanEntity;
+import com.tp.entity.TaikhoanEntity;
 
-public class customUserDetail implements UserDetails{
+public class CustomUserDetail implements UserDetails{
 
-    private taikhoanEntity taikhoanEntity;
+    private TaikhoanEntity taikhoanEntity;
     
-    public customUserDetail(taikhoanEntity taikhoanEntity) {
+    public CustomUserDetail(TaikhoanEntity taikhoanEntity) {
         this.taikhoanEntity = taikhoanEntity;
     }
 
-    public taikhoanEntity getTaikhoanentity(){
+    public TaikhoanEntity getTaikhoanentity(){
         return taikhoanEntity;
     }
 

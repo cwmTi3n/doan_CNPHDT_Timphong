@@ -9,18 +9,18 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tp.entity.phongEntity;
-import com.tp.service.phongService;
+import com.tp.entity.PhongEntity;
+import com.tp.service.PhongService;
 import com.tp.util.Constant;
 
 @Controller
 @RequestMapping("")
-public class indexController {
+public class IndexController {
 	@Autowired
-	phongService phongService;
+    PhongService phongService;
 	@GetMapping(value = {"", "/trangchu"})
 	public String getIndex(ModelMap map, HttpSession session) {
-		Page<phongEntity> pPhong = phongService.findAll(true, 0, Constant.PAGESIZE_PHONG, "ten");
+		Page<PhongEntity> pPhong = phongService.findAll(true, 0, Constant.PAGESIZE_PHONG, "ten");
 		map.addAttribute("pPhong", pPhong);
 		return "web/index";
 	}

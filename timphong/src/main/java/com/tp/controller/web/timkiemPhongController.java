@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tp.entity.loaiphongEntity;
-import com.tp.entity.phongEntity;
-import com.tp.service.loaiphongService;
-import com.tp.service.phongService;
+import com.tp.entity.LoaiphongEntity;
+import com.tp.entity.PhongEntity;
+import com.tp.service.LoaiphongService;
+import com.tp.service.PhongService;
 import com.tp.util.Constant;
 
 @Controller
 @RequestMapping("timkiem")
-public class timkiemPhongController {
+public class TimkiemPhongController {
 	@Autowired
-	phongService phongService;
+	PhongService phongService;
 	@Autowired
-	loaiphongService loaiphongService;
+    LoaiphongService loaiphongService;
 	@GetMapping("")
 	public String getTimkiemPhong(@RequestParam(name = "keyword", defaultValue = "") String keyword,
 		ModelMap map) {
-		List<loaiphongEntity> loaiphongs = loaiphongService.findAll();
-		Page<phongEntity> pPhong;
+		List<LoaiphongEntity> loaiphongs = loaiphongService.findAll();
+		Page<PhongEntity> pPhong;
 		if(keyword.equals("")) {
 			pPhong = phongService.findAll(true, 0, Constant.PAGESIZE_PHONG, "ten");
 		}

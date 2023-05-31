@@ -2,8 +2,14 @@ package com.tp.util;
 
 import java.util.Random;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.tp.entity.TaikhoanEntity;
+import com.tp.model.CustomUserDetail;
+
 public class Constant {
-    public static final int PAGESIZE_PHONG = 3;
+    public static final int PAGESIZE_PHONG = 9;
     public static final int PAGESIZE_TAIKHOAN = 3;
     public static String getCode() {
         int codeLength = 6; // độ dài của mã xác nhận
@@ -18,4 +24,11 @@ public class Constant {
         }
         return code.toString();
     }
+    public static TaikhoanEntity getUserLogin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
+        return userDetails.getTaikhoanentity();
+    }
+
+    public static final String protocol = "https://";
 }

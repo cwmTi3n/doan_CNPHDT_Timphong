@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,23 +12,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tp.entity.roleEnum;
-import com.tp.entity.taikhoanEntity;
-import com.tp.model.taikhoanModel;
-import com.tp.service.taikhoanService;
+import com.tp.entity.TaikhoanEntity;
+import com.tp.model.TaikhoanModel;
+import com.tp.service.TaikhoanService;
 
 @Controller
 @RequestMapping("register")
-public class registerController {
+public class RegisterController {
     @Autowired
-    taikhoanService taikhoanService;
+    TaikhoanService taikhoanService;
     @PostMapping("")
-    public String registerUser(@Valid @ModelAttribute("taikhoan") taikhoanModel taikhoanModel, ModelMap map) {
-        taikhoanEntity taikhoanEntity = taikhoanService.findByUsername(taikhoanModel.getUsername());
+    public String registerUser(@Valid @ModelAttribute("taikhoan") TaikhoanModel taikhoanModel, ModelMap map) {
+        TaikhoanEntity taikhoanEntity = taikhoanService.findByUsername(taikhoanModel.getUsername());
         if(taikhoanEntity == null) {
-            taikhoanEntity taikhoan = new taikhoanEntity();
+            TaikhoanEntity taikhoan = new TaikhoanEntity();
             BeanUtils.copyProperties(taikhoanModel, taikhoan);
             taikhoan.setRole(roleEnum.USER);;
             taikhoan.setTrangthai(true);
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            taikhoan.setPassword(passwordEncoder.encode(taikhoan.getPassword()));
             if(taikhoanService.SavedRequest(taikhoan) == null) {
                 map.addAttribute("error", "Tạo tài khoản không thành công");
             }

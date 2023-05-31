@@ -2,7 +2,7 @@ package com.tp.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.tp.service.cloudinaryService;
+import com.tp.service.CloudinaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class cloudinaryServiceImpl implements cloudinaryService {
+public class CloudinaryServiceImpl implements CloudinaryService {
     private final Cloudinary cloudinary;
     @Override
     public String uploadFile(MultipartFile multipartFile) throws IOException {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("login")
-public class loginController {
+public class LoginController {
     @GetMapping("")
     public String getFormLogin(HttpServletRequest request, ModelMap map) {
         Cookie[] cookies = request.getCookies();

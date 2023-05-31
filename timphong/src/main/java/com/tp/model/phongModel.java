@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class phongModel {
+public class PhongModel {
 	private int phongId;
 	private String ten;
 	private MultipartFile anhchinh;

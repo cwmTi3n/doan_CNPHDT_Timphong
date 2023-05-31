@@ -8,10 +8,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.tp.service.emailService;
+import com.tp.service.EmailService;
 
 @Service
-public class emailServiceImpl implements emailService{
+public class EmailServiceImpl implements EmailService {
     @Autowired
     JavaMailSender emailSender;
 

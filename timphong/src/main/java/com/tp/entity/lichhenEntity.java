@@ -25,9 +25,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class lichhenEntity {
+public class LichhenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "lichhenId")
     private int lichhenId;
 
     @Temporal(TemporalType.DATE)
@@ -42,9 +43,9 @@ public class lichhenEntity {
 
     @ManyToOne()
     @JoinColumn(name = "taikhoanId")
-    private taikhoanEntity taikhoan;
+    private TaikhoanEntity taikhoan;
 
     @ManyToOne()
     @JoinColumn(name = "phongId")
-    private phongEntity phong;
+    private PhongEntity phong;
 }

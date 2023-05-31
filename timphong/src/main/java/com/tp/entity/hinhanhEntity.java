@@ -20,9 +20,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class hinhanhEntity {
+public class HinhanhEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hinhanhId")
     private int hinhanhId;
 
     @Column(name = "url")
@@ -31,5 +32,5 @@ public class hinhanhEntity {
     @ManyToOne()
     @JoinColumn(name = "phongId")
     @JsonIgnore
-    private phongEntity phong;
+    private PhongEntity phong;
 }

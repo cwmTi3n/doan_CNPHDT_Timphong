@@ -5,27 +5,28 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.tp.entity.roleEnum;
-import com.tp.entity.taikhoanEntity;
+import com.tp.entity.TaikhoanEntity;
 
-public interface taikhoanService {
+public interface TaikhoanService {
 
-	<S extends taikhoanEntity> S SavedRequest(S entity);
+	<S extends TaikhoanEntity> S SavedRequest(S entity);
 
-	void delete(taikhoanEntity taikhoanEntity);
+	void delete(TaikhoanEntity taikhoanEntity);
 
 	void deleteById(Integer id);
 
-	taikhoanEntity findById(Integer id);
+	TaikhoanEntity findById(Integer id);
 
-	List<taikhoanEntity> findAll();
+	List<TaikhoanEntity> findAll();
 
-	Page<taikhoanEntity> findAllUser(int page, int size);
+	Page<TaikhoanEntity> findAllUser(int page, int size);
 
-	Page<taikhoanEntity> findAllSeller(int page, int size);
+	Page<TaikhoanEntity> findAllSeller(int page, int size);
 
-	Page<taikhoanEntity> searchTaikhoan(int page, int size, roleEnum role, String keyword);
+	Page<TaikhoanEntity> searchTaikhoan(int page, int size, roleEnum role, String keyword);
 	
-	taikhoanEntity findByUsername(String username);
+	TaikhoanEntity findByUsername(String username);
 
 	int findByRole(roleEnum role);
+
 }

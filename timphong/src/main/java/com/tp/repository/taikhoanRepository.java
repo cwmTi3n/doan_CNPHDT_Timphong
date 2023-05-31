@@ -9,15 +9,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.tp.entity.roleEnum;
-import com.tp.entity.taikhoanEntity;
+import com.tp.entity.TaikhoanEntity;
 
-public interface taikhoanRepository extends JpaRepository<taikhoanEntity, Integer>{
-	Page<taikhoanEntity> findAllByRole(roleEnum role, Pageable pageable);
+public interface TaikhoanRepository extends JpaRepository<TaikhoanEntity, Integer>{
+	Page<TaikhoanEntity> findAllByRole(roleEnum role, Pageable pageable);
 	
-	@Query("select t from taikhoanEntity t where t.role = :role and (t.sdt like %:keyword% or t.username like %:keyword%)")
-	Page<taikhoanEntity> searchTaikhoan(roleEnum role, String keyword, Pageable pageable);
+	@Query("select t from TaikhoanEntity t where t.role = :role and (t.sdt like %:keyword% or t.username like %:keyword%)")
+	Page<TaikhoanEntity> searchTaikhoan(roleEnum role, String keyword, Pageable pageable);
 
-	taikhoanEntity findByUsername(String username);
+	TaikhoanEntity findByUsername(String username);
 
-	List<taikhoanEntity> findByRole(roleEnum role);
+	List<TaikhoanEntity> findByRole(roleEnum role);
 }

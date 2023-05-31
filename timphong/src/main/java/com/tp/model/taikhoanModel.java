@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class taikhoanModel {
+public class TaikhoanModel {
 	private int taikhoanId;
 	private String username;
 	private String password;
